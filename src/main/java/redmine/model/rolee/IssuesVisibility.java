@@ -13,11 +13,11 @@ public enum IssuesVisibility {
         this.description = description;
     }
 
-    public static IssuesVisibility of(final String description) {
+    public static IssuesVisibility of( String description) {
        return Stream.of(values())
                 .filter(it->it.description.equals(description))
                 .findFirst()
-                .orElseThrow(()->new IllegalArgumentException("Не найде IssuesVisibility"+description));
+                .orElseThrow(()->new IllegalArgumentException("Не найден IssuesVisibility"+description));
     }
 
 }
