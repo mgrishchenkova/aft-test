@@ -9,6 +9,12 @@ public class Role {
     private IssuesVisibility issuesVisibility;
     private UsersVisibility usersVisibility;
     private Set<RolePermission> rolePermissionSet;
+    private TimeEntriesVisibility timeEntriesVisibility;
+    private Boolean allRolesManaged;
+    private int builtin;
+    private String settings;
 
+    public Role() {
 
+    }
 }
