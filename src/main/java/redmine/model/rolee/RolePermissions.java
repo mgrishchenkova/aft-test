@@ -6,6 +6,7 @@ import java.util.Set;
 
 public class RolePermissions extends HashSet<RolePermission> {
     public RolePermissions(RolePermission... permissions) {
+
         this.addAll(Arrays.asList(permissions));
     }
 

@@ -1,8 +1,10 @@
 package redmine.model.rolee;
 
+import redmine.util.Generatable;
+
 import java.util.Set;
 
-public class Role {
+public class Role implements Generatable<Role> {
     private String name;
     private Boolean assignable;
     private Integer position;
@@ -16,5 +18,20 @@ public class Role {
 
     public Role() {
 
+    }
+
+    @Override
+    public Role read() {
+        return null;
+    }
+
+    @Override
+    public Role update() {
+        return null;
+    }
+
+    @Override
+    public Role create() {
+        return null;
     }
 }
