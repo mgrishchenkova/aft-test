@@ -1,9 +1,12 @@
 package redmine.model.rolee;
 
-import redmine.util.Generatable;
+import lombok.Getter;
+import lombok.Setter;
+import redmine.model.Generatable;
 
 import java.util.Set;
-
+@Getter
+@Setter
 public class Role implements Generatable<Role> {
     private String name;
     private Boolean assignable;

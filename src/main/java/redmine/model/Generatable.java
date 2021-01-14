@@ -1,4 +1,4 @@
-package redmine.util;
+package redmine.model;
 
 public interface Generatable<T> {
     T read();
