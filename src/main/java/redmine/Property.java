@@ -22,7 +22,7 @@ public class Property {
         return Integer.parseInt(getStringProperties(key));
     }
 
-    public static Boolean getBollenProperty(String key){
+    public static Boolean getBooleanProperty(String key){
         return Boolean.parseBoolean(getStringProperties(key));
     }
 }
