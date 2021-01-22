@@ -19,4 +19,10 @@ public enum UsersVisibility {
                 .orElseThrow(()->new IllegalArgumentException("Не найден UsersVisibility"+description));
 
     }
+
+
+    @Override
+    public String toString() {
+        return name().toLowerCase();
+    }
 }

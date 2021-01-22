@@ -20,4 +20,8 @@ public enum IssuesVisibility {
                 .orElseThrow(()->new IllegalArgumentException("Не найден IssuesVisibility"+description));
     }
 
+    @Override
+    public String toString() {
+        return name().toLowerCase();
+    }
 }
