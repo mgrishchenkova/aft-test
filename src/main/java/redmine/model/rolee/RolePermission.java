@@ -1,7 +1,9 @@
 package redmine.model.rolee;
 
-import java.util.stream.Stream;
+import lombok.AllArgsConstructor;
 
+import java.util.stream.Stream;
+@AllArgsConstructor
 public enum RolePermission {
     ADD_PROJECT("Создание проекта"),
     EDIT_PROJECT("Редактирование проектов"),
@@ -72,10 +74,8 @@ public enum RolePermission {
     PROTECT_WIKI_PAGES("Блокирование wiki-страниц"),
     MANAGE_WIKI("Управление Wiki");
 
-    public  String description;
-    RolePermission (String description){
-        this.description=description;
-    }
+    public  final String description;
+
 
     public static RolePermission of(String description) {
         return Stream.of(values())
