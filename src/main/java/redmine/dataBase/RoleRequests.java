@@ -53,4 +53,24 @@ public class RoleRequests {
         return role;
 
     }
+
+    public static Role updateRole(Role role){
+        String query = "UPDATE public.roles\n" +
+                "SET \"position\"=?, assignable=?, builtin=?, " +
+                "permissions=?, issues_visibility=?, users_visibility=?, time_entries_visibility=?, all_roles_managed=?, settings=?\n" +
+                "WHERE name=? RETURNING id;\n";
+        List<Map<String, Object>> result =Manager.dbConnection.executePreparedQuery(query,
+                role.getPosition(),
+                role.getAssignable(),
+                role.getBuiltin(),
+                role.getRolePermissionSet().toString(),
+                role.getIssuesVisibility().toString(),
+                role.getUsersVisibility().toString(),
+                role.getTimeEntriesVisibility().toString(),
+                role.getAllRolesManaged(),
+                role.getSettings());
+        role.setId((Integer) result.get(0).get("id"));
+        return role;
+
+    }
 }
