@@ -2,6 +2,7 @@ package testDB;
 
 import org.testng.annotations.Test;
 import redmine.dataBase.RoleRequests;
+import redmine.dataBase.UserRequest;
 import redmine.model.rolee.*;
 
 import java.util.Arrays;
@@ -47,5 +48,11 @@ public class testSelectDB {
         role.setTimeEntriesVisibility(TimeEntriesVisibility.ALL);
         role.setAssignable(true);
         role.generate();
+    }
+
+    @Test
+    public void testAllUsers(){
+        int count = UserRequest.getAllUsers().size();
+        System.out.println(count);
     }
 }

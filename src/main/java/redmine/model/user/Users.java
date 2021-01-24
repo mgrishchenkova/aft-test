@@ -1,12 +1,20 @@
 package redmine.model.user;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
+import redmine.model.Generatable;
 
 import java.util.Date;
 @Getter
 @Setter
-public class Users {
+@NoArgsConstructor
+@EqualsAndHashCode
+@Accessors(chain = true)
+public class Users implements Generatable<Users> {
+    private Integer id;
     private String login;
     private String firstname;
     private String lastname;
@@ -28,6 +36,18 @@ public class Users {
     private Date passwd_changed_on;
 
 
+    @Override
+    public Users read() {
+        return null;
+    }
 
+    @Override
+    public Users update() {
+        return null;
+    }
 
+    @Override
+    public Users create() {
+        return null;
+    }
 }

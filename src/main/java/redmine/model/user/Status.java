@@ -1,14 +1,25 @@
 package redmine.model.user;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+import java.util.stream.Stream;
+
+@Getter
+@AllArgsConstructor
 public enum Status {
-    ACTIVE("1"),
-    WAS("2"),
-    BLOCKED("3");
+    ACTIVE(1),
+    WAS(2),
+    BLOCKED(3);
 
-    private String description;
+    public final Integer status;
 
-    Status (String description){
-        this.description=description;
+    public static Status of(Integer status){
+        return Stream.of(values())
+                .filter(it->it.status.equals(status))
+                .findFirst()
+                .orElseThrow(()->new IllegalArgumentException("Не найден status"+status));
+
     }
 
 }
