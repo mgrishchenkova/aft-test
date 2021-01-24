@@ -54,12 +54,12 @@ public class RoleRequests {
 
     }
 
-    public static Role updateRole(Role role){
+    public static Role updateRole(Role role) {
         String query = "UPDATE public.roles\n" +
                 "SET \"position\"=?, assignable=?, builtin=?, " +
                 "permissions=?, issues_visibility=?, users_visibility=?, time_entries_visibility=?, all_roles_managed=?, settings=?\n" +
                 "WHERE name=? RETURNING id;\n";
-        List<Map<String, Object>> result =Manager.dbConnection.executePreparedQuery(query,
+        List<Map<String, Object>> result = Manager.dbConnection.executePreparedQuery(query,
                 role.getPosition(),
                 role.getAssignable(),
                 role.getBuiltin(),
@@ -68,9 +68,24 @@ public class RoleRequests {
                 role.getUsersVisibility().toString(),
                 role.getTimeEntriesVisibility().toString(),
                 role.getAllRolesManaged(),
-                role.getSettings());
+                role.getSettings(),
+                role.getName());
+
         role.setId((Integer) result.get(0).get("id"));
         return role;
 
+    }
+
+    public static Role getRole(Role objectRole) {
+        return getAllRoles().stream()
+                .filter(role -> {
+                    if (objectRole.getId() == null) {
+                        return objectRole.getName().equals(role.getName());
+                    } else {
+                        return (objectRole.getId().equals(role.getId()));
+                    }
+                })
+                .findFirst()
+                .orElse(null);
     }
 }

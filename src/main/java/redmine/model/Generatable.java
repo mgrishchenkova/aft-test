@@ -7,7 +7,7 @@ public interface Generatable<T> {
 
     T create();
 
-    default T genarate() {
+    default T generate() {
         if (read() != null) {
             return update();
         } else return create();
