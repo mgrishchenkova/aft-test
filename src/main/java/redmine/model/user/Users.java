@@ -7,7 +7,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import redmine.model.Generatable;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,22 +18,23 @@ public class Users implements Generatable<Users> {
     private String login;
     private String firstname;
     private String lastname;
-    private Boolean admin;
-    private Status status;
-    private String email;
-    private String password;
+    private Boolean admin=true;
+    private Integer status=1;
+    private String email="dvkkdfb";
+    private String password="dfbdfn";
     private String hashed_password;
-    private String salt;
-    private Date last_login_on;
-    private String language;
-    private Integer auth_source_id;
-    private Date created_on;
-    private Date updated_on;
-    private String type;
-     private String  identity_url;
-    private  String mail_notification;
-    private Boolean must_change_passwd;
-    private Date passwd_changed_on;
+    private String salt="gbennnn";
+    private LocalDateTime last_login_on;
+    private String language="ru";
+    private Integer auth_source_id=1;
+    private LocalDateTime created_on;
+    private LocalDateTime updated_on;
+    private String type="User";
+     private String  identity_url="636346343s";
+    private  String mail_notification="dffd";
+    private Boolean must_change_passwd=false;
+    private LocalDateTime passwd_changed_on;
+
 
 
     @Override

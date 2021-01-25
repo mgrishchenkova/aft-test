@@ -4,7 +4,10 @@ import org.testng.annotations.Test;
 import redmine.dataBase.RoleRequests;
 import redmine.dataBase.UserRequest;
 import redmine.model.rolee.*;
+import redmine.model.user.Users;
 
+import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -54,5 +57,32 @@ public class testSelectDB {
     public void testAllUsers(){
         int count = UserRequest.getAllUsers().size();
         System.out.println(count);
+    }
+
+    @Test
+    public void testAddUser() throws ParseException {
+        LocalDateTime localDate = LocalDateTime.now();
+        Users user=new Users();
+        user.setLogin("testLogin1").setHashed_password("1sksfbksfbn55555555ksfbnkfbnkjdfbnjkdfnb")
+                .setFirstname("testststt").setLastname("efvsdv").
+
+                setLast_login_on(localDate).
+                setCreated_on(localDate).
+               setUpdated_on(localDate);
+             //setPasswd_changed_on(localDate);
+        UserRequest.addUser(user);
+    }
+    @Test
+    public void testUserUpdate(){
+        LocalDateTime localDate = LocalDateTime.now();
+        Users users=new Users();
+        users.setLogin("testLogin1").setHashed_password("1sksfbksfbn55555555ksfbnkfbnkjdfbnjkdfnb")
+                .setFirstname("testststt").setLastname("efvsdv").
+                setAdmin(false).
+
+                setLast_login_on(localDate).
+                setCreated_on(localDate).
+                setUpdated_on(localDate);
+        UserRequest.updateRole(users);
     }
 }

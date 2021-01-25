@@ -14,6 +14,10 @@ public enum Status {
 
     public final Integer status;
 
+    public Integer getStatus(){
+        return status;
+    }
+
     public static Status of(Integer status){
         return Stream.of(values())
                 .filter(it->it.status.equals(status))
@@ -21,5 +25,6 @@ public enum Status {
                 .orElseThrow(()->new IllegalArgumentException("Не найден status"+status));
 
     }
+
 
 }
