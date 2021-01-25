@@ -39,7 +39,7 @@ public class UserRequest {
                     return user;
                 }).collect(Collectors.toList());
     }
-    public static Users getRole(Users objectUser) {
+    public static Users getUser(Users objectUser) {
         return getAllUsers().stream()
                 .filter(user -> {
                     if (objectUser.getId() == null) {
@@ -52,7 +52,7 @@ public class UserRequest {
                 .orElse(null);
     }
 
-    public static Users updateRole(Users user){
+    public static Users updateUser(Users user){
         String query="UPDATE public.users\n" +
                 "SET hashed_password=?, firstname=?, lastname=?, \"admin\"=?, status=?, last_login_on=?, \"language\"=?, auth_source_id=?, created_on=?, updated_on=?, \"type\"=?, identity_url=?, mail_notification=?, salt=?, must_change_passwd=?, passwd_changed_on=?\n" +
                 "WHERE login=? RETURNING id;\n";

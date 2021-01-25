@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import redmine.dataBase.UserRequest;
 import redmine.model.Generatable;
 
 import java.time.LocalDateTime;
@@ -39,16 +40,19 @@ public class Users implements Generatable<Users> {
 
     @Override
     public Users read() {
-        return null;
+
+        Users user = UserRequest.getUser(this);
+        return user;
     }
 
     @Override
     public Users update() {
-        return null;
+
+        return UserRequest.updateUser(this);
     }
 
     @Override
     public Users create() {
-        return null;
+        return UserRequest.addUser(this);
     }
 }

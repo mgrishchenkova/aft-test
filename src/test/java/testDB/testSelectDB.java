@@ -63,7 +63,7 @@ public class testSelectDB {
     public void testAddUser() throws ParseException {
         LocalDateTime localDate = LocalDateTime.now();
         Users user=new Users();
-        user.setLogin("testLogin1").setHashed_password("1sksfbksfbn55555555ksfbnkfbnkjdfbnjkdfnb")
+        user.setLogin("testLogin3").setHashed_password("1sksfbksfbn55555555ksfbnkfbnkjdfbnjkdfnb")
                 .setFirstname("testststt").setLastname("efvsdv").
 
                 setLast_login_on(localDate).
@@ -73,7 +73,7 @@ public class testSelectDB {
         UserRequest.addUser(user);
     }
     @Test
-    public void testUserUpdate(){
+    public void testUserUpdate() throws ParseException{
         LocalDateTime localDate = LocalDateTime.now();
         Users users=new Users();
         users.setLogin("testLogin1").setHashed_password("1sksfbksfbn55555555ksfbnkfbnkjdfbnjkdfnb")
@@ -83,6 +83,16 @@ public class testSelectDB {
                 setLast_login_on(localDate).
                 setCreated_on(localDate).
                 setUpdated_on(localDate);
-        UserRequest.updateRole(users);
+        UserRequest.updateUser(users);
+    }
+
+    @Test
+    public void testGenerateUser()throws ParseException{
+        LocalDateTime localDate = LocalDateTime.now();
+        Users user = new Users();
+        user.setLogin("testLogin2").setAdmin(true).setLast_login_on(localDate).
+                setCreated_on(localDate).
+                setUpdated_on(localDate);
+        user.generate();
     }
 }
