@@ -1,12 +1,10 @@
 package redmine.model.user;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.Accessors;
 import redmine.dataBase.UserRequest;
 import redmine.model.Generatable;
+import redmine.util.StringGenerator;
 
 import java.time.LocalDateTime;
 @Getter
@@ -14,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Accessors(chain = true)
+@Data
 public class Users implements Generatable<Users> {
     private Integer id;
     private String login;
@@ -21,10 +20,10 @@ public class Users implements Generatable<Users> {
     private String lastname;
     private Boolean admin=true;
     private Integer status=1;
-    private String email="dvkkdfb";
+    private String email=StringGenerator.email();
     private String password="dfbdfn";
     private String hashed_password;
-    private String salt="gbennnn";
+    private String salt= StringGenerator.stringRandom(32,"0123456789abcdef");
     private LocalDateTime last_login_on;
     private String language="ru";
     private Integer auth_source_id=1;
