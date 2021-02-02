@@ -18,22 +18,22 @@ public class Users implements Generatable<Users> {
     private String login=StringGenerator.stringRandom(8,StringGenerator.ENGLISH);
     private String firstname=StringGenerator.stringRandom(12,StringGenerator.ENGLISH);;
     private String lastname=StringGenerator.stringRandom(12,StringGenerator.ENGLISH);;
-    private Boolean admin;
+    private Boolean admin=false;
     private Integer status=1;
     private String email=StringGenerator.email();
     private String password="dfbdfn";
-    private String hashed_password;
+    private String hashed_password="dfbb";
     private String salt= StringGenerator.stringRandom(32,"0123456789abcdef");
-    private LocalDateTime last_login_on=LocalDateTime.now();
+    private LocalDateTime last_login_on;
     private String language="ru";
     private Integer auth_source_id=1;
-    private LocalDateTime created_on=LocalDateTime.now();
-    private LocalDateTime updated_on=LocalDateTime.now();
+    private LocalDateTime created_on;
+    private LocalDateTime updated_on;
     private String type="User";
      private String  identity_url="636346343s";
     private  String mail_notification="dffd";
     private Boolean must_change_passwd=false;
-    private LocalDateTime passwd_changed_on=LocalDateTime.now();
+    private LocalDateTime passwd_changed_on;
 
     public String getApiKey(){
         return StringGenerator.stringRandom(40,"0123456789abcdef");
