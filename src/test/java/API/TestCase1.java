@@ -38,7 +38,11 @@ public class TestCase1 {
                         .setPassword("1qaz@WSX")
                 );
         String body = getGson().toJson(user);
+        //1. Отправить запрос POST на создание пользователя
         Response rs = apiClient.request(new RestRequest("users.json", Methods.POST, null, body, null));
+        UserDTO createdUserDto = rs.getBody(UserDTO.class);
         Assert.assertEquals(rs.getStatusCode(), 201);
+        Assert.assertNotNull(createdUserDto.getUser().getId());
+
     }
 }
