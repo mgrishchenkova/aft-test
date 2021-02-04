@@ -20,15 +20,15 @@ public class RestApiClient implements ApiClient {
 
     public RestApiClient(Users user) {
         Objects.requireNonNull(user, "Пользователь должен быть инициализирован");
-        Objects.requireNonNull(user.getApiKey(), "У пользователя должен быть создан ключ API");
-        token = user.getApiKey();
+        Objects.requireNonNull(user.getApikey(), "У пользователя должен быть создан ключ API");
+        token = user.getApikey();
     }
 
     @Override
     public Response request(Request request) {
         RequestSpecification specification=given();
         Map<String,String> headers=request.getHeaders();
-        headers.put("X-Redmi-API-Key",token);
+        headers.put("X-Redmine-API-Key",token);
         if (headers.get("Content-Type") == null) {
             specification.contentType(ContentType.JSON);
         }

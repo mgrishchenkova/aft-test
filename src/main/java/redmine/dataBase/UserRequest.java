@@ -3,7 +3,7 @@ package redmine.dataBase;
 import redmine.Manager.Manager;
 import redmine.model.user.Users;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,19 +23,19 @@ public class UserRequest {
                     user.setAdmin((Boolean) map.get("admin"));
                    user.setStatus((Integer) map.get("status"));
                     //user.setEmail((String)map.get("email"));
-                    user.setPassword((String) map.get("password"));
+                    //user.setPassword((String) map.get("password"));
                     user.setHashed_password((String)map.get("hashed_password"));
                     user.setSalt((String) map.get("salt"));
-                    user.setLast_login_on((LocalDateTime) map.get("last_login_on"));
+                    user.setLast_login_on((Timestamp) map.get("last_login_on"));
                     user.setLanguage((String) map.get("language"));
                     user.setAuth_source_id((Integer) map.get("auth_source_id"));
-                    user.setCreated_on((LocalDateTime) map.get("created_on"));
-                    user.setUpdated_on((LocalDateTime) map.get("updated_on"));
+                    user.setCreated_on((Timestamp) map.get("created_on"));
+                    user.setUpdated_on((Timestamp) map.get("updated_on"));
                     user.setType((String) map.get("type"));
                     user.setIdentity_url((String) map.get("identity_url"));
                     user.setMail_notification((String) map.get("mail_notification"));
                     user.setMust_change_passwd((Boolean) map.get("must_change_passwd"));
-                    user.setPasswd_changed_on((LocalDateTime) map.get("passwd_changed_on"));
+                    user.setPasswd_changed_on((Timestamp) map.get("passwd_changed_on"));
                     return user;
                 }).collect(Collectors.toList());
     }
@@ -75,6 +75,7 @@ public class UserRequest {
                 user.getMust_change_passwd(),
                 user.getPasswd_changed_on(),
                 user.getLogin()
+
         );
         user.setId((Integer) result.get(0).get("id"));
         return user;
@@ -103,6 +104,7 @@ public class UserRequest {
                 user.getSalt(),
                 user.getMust_change_passwd(),
                 user.getPasswd_changed_on()
+
                 );
         user.setId((Integer) result.get(0).get("id"));
         return user;

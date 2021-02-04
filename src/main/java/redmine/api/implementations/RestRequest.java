@@ -19,8 +19,8 @@ public class RestRequest implements Request {
     public RestRequest(String uri, Methods methods, Map<String, String> parameters, Object body, Map<String, String> headers) {
         Objects.requireNonNull(uri,"в запросе должен быть uri");
         Objects.requireNonNull(methods,"Не указан метод!");
-        String baseUri = Property.getStringProperties("url");
-        this.uri = uri + baseUri;
+        String baseUri = Property.getStringProperties("host");
+        this.uri = baseUri + uri;
         this.methods = methods;
         if (parameters == null) {
             parameters = new HashMap<>();
