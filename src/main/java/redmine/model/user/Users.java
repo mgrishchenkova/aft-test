@@ -22,7 +22,7 @@ public class Users implements Generatable<Users> {
     private String login=StringGenerator.stringRandom(8,StringGenerator.ENGLISH);
     private String firstname=StringGenerator.stringRandom(12,StringGenerator.ENGLISH);;
     private String lastname=StringGenerator.stringRandom(12,StringGenerator.ENGLISH);;
-    private Boolean admin=true;
+    private Boolean admin=false;
     private Integer status=1;
     private String email=StringGenerator.email();
     private String password=StringGenerator.stringRandom(9,StringGenerator.ENGLISH);

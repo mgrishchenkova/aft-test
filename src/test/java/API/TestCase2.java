@@ -1,10 +1,19 @@
 package API;
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import redmine.Manager.Manager;
 import redmine.api.implementations.RestApiClient;
+import redmine.api.implementations.RestRequest;
 import redmine.api.interfaces.ApiClient;
+import redmine.api.interfaces.Methods;
+import redmine.api.interfaces.Response;
+import redmine.model.dto.UserDTO;
+import redmine.model.dto.UserInfo;
 import redmine.model.user.Users;
+
+import static redmine.util.GsonHelper.getGson;
 
 public class TestCase2 {
     private Users user;
@@ -27,6 +36,14 @@ public class TestCase2 {
                 "VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)RETURNING id;;\n";
         Manager.dbConnection.executePreparedQuery(emailAdd,
                 user.getId(),user.getEmail(),true,true, user.getCreated_on(),user.getUpdated_on());
+
+    }
+    @Test
+    public void createUserNotAdmin(){
+        UserDTO userDTO=new UserDTO().setUser(new UserInfo());
+        String body = getGson().toJson(userDTO);
+        Response rs = apiClient.request(new RestRequest("users.json", Methods.POST, null, body, null));
+        Assert.assertEquals(rs.getStatusCode(),403);
 
     }
 }
