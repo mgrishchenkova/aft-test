@@ -87,4 +87,10 @@ public class testSelectDB {
         user.setLogin("testLogin2").setAdmin(true);
         user.generate();
     }
+    @Test
+    public void testToken(){
+        Users user = new Users();
+        user.generate();
+        UserRequest.addUser(user);
+    }
 }
