@@ -12,15 +12,14 @@ import redmine.api.interfaces.Response;
 import redmine.model.dto.UserDTO;
 import redmine.model.dto.UserInfo;
 import redmine.model.user.Users;
+import redmine.util.StringGenerator;
 
 import static redmine.util.GsonHelper.getGson;
 
 public class TestCase1 {
     private Users user;
     private ApiClient apiClient;
-    UserDTO userAdd = new UserDTO()
-            .setUser(new UserInfo());
-    String body = getGson().toJson(user);
+
 
     @BeforeMethod
     public void testPrerequisite() {
@@ -29,6 +28,8 @@ public class TestCase1 {
         user.setAdmin(true);
         user.generate();
         apiClient = new RestApiClient(user);
+
+        //ВЫНЕСТИ В МЕТОД!!!
         String addToken="INSERT INTO public.tokens\n" +
                 "(id, user_id, \"action\", value, created_on, updated_on)\n" +
                 "VALUES(DEFAULT, ?, ?, ?, ?, ?)RETURNING id;\n";
@@ -45,13 +46,22 @@ public class TestCase1 {
 
     @Test
     public void testPostUser() {
+        UserDTO createUser = new UserDTO()
+                .setUser(new UserInfo()
+                        .setLogin(StringGenerator.stringRandom(8,StringGenerator.ENGLISH))
+                        .setFirstname(StringGenerator.stringRandom(8,StringGenerator.ENGLISH))
+                        .setLastname(StringGenerator.stringRandom(8,StringGenerator.ENGLISH))
+                        .setMail(StringGenerator.email())
+                        .setPassword("1qaz@WSX")
+                );
+        String body = getGson().toJson(createUser);
 
         //1. Отправить запрос POST на создание пользователя
         Response rs = apiClient.request(new RestRequest("users.json", Methods.POST, null, body, null));
-        //UserDTO createdUserDto = rs.getBody(UserDTO.class);
-        //Проверки
+        UserDTO userDTO = rs.getBody(UserDTO.class);
+        //Проверки к п.1
         Assert.assertEquals(rs.getStatusCode(), 201);
-       // Assert.assertNotNull(createdUserDto.getUser().getId());
+    Assert.assertNotNull(userDTO.getUser().getId());
 
     }
 }
