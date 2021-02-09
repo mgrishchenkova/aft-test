@@ -76,8 +76,8 @@ public class TestCase1 {
         Response rsDubl = apiClient.request(new RestRequest("users.json", Methods.POST, null, body, null));
         UserCreatingError errors=getGson().fromJson(rsDubl.getBody().toString(),UserCreatingError.class);
         Assert.assertEquals(rsDubl.getStatusCode(),422);
-        Assert.assertEquals(errors.getErrors().get(0),"");
-        Assert.assertEquals(errors.getErrors().get(1),"");
+        Assert.assertEquals(errors.getErrors().get(0),"Email уже существует");
+        Assert.assertEquals(errors.getErrors().get(1),"Пользователь уже существует");
 
        //Отправить запрос POST на создание пользователя повторно с тем же телом запроса, при этом изменив "email" на невалидный, а "password" - на строку из 4 символов
 
