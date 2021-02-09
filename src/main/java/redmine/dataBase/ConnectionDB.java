@@ -35,12 +35,13 @@ public class ConnectionDB {
     }
 
     @SneakyThrows
-    public void connect() {
+    private void connect() {
         Class.forName("org.postgresql.Driver");
         String url = String.format("jdbc:postgresql://%s:%d/%s?user=%s&password=%s", dbHost, dbPort, dbName, dbUser, dbPass);
         connection = DriverManager.getConnection(url);
     }
 
+//TODO написать докуменцию к методам
     @SneakyThrows
     public List<Map<String, Object>> executeQuery(String query) {
         Statement statement = connection.createStatement();

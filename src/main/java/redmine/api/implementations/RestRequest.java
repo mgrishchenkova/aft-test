@@ -33,28 +33,5 @@ public class RestRequest implements Request {
         this.headers = headers;
     }
 
-    @Override
-    public String getUri() {
-        return uri;
-    }
 
-    @Override
-    public Methods getMethods() {
-        return methods;
-    }
-
-    @Override
-    public Map<String, String> getParameters() {
-        return parameters;
-    }
-
-    @Override
-    public Object getBody() {
-        return body;
-    }
-
-    @Override
-    public Map<String, String> getHeaders() {
-        return headers;
-    }
 }

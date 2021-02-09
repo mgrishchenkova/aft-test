@@ -15,23 +15,21 @@ import java.util.Objects;
 import static io.restassured.RestAssured.given;
 
 public class RestApiClient implements ApiClient {
-    String token;
+    private String token;
 
 
     public RestApiClient(Users user) {
         Objects.requireNonNull(user, "Пользователь должен быть инициализирован");
         Objects.requireNonNull(user.getApikey(), "У пользователя должен быть создан ключ API");
         token = user.getApikey();
-    } //пользователь, под которым логинимся
-
-
+    }
 
 
     @Override
     public Response request(Request request) {
-        RequestSpecification specification=given();
-        Map<String,String> headers=request.getHeaders();
-        headers.put("X-Redmine-API-Key",token);
+        RequestSpecification specification = given();
+        Map<String, String> headers = request.getHeaders();
+        headers.put("X-Redmine-API-Key", token);
         if (headers.get("Content-Type") == null) {
             specification.contentType(ContentType.JSON);
         }
@@ -48,6 +46,7 @@ public class RestApiClient implements ApiClient {
         addAttachments(request, restResponse);
         return restResponse;
     }
+
     private void addAttachments(Request request, Response response) {
         Allure.addAttachment("Запрос", request.toString());
         Allure.addAttachment("Ответ", response.toString());

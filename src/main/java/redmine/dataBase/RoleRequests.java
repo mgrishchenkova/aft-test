@@ -21,7 +21,6 @@ public class RoleRequests {
                     role.setRolePermissionSet(RolePermissions.of((String) map.get("permissions")));
                     role.setIssuesVisibility(
                             IssuesVisibility.valueOf(((String) map.get("issues_visibility")).toUpperCase()));
-                    // role.setUsersVisibility((UsersVisibility.valueOf(((String)map.get("users_visibility")).toUpperCase())));
                     role.setTimeEntriesVisibility(
                             TimeEntriesVisibility.valueOf(((String) map.get("time_entries_visibility")).toUpperCase())
                     );
@@ -76,6 +75,10 @@ public class RoleRequests {
 
     }
 
+    //TODO следует разнести на отдельные запросы
+    //TODO SELECT * FROM ROLES WHERE id = ?
+    //TODO SELECT * FROM ROLES WHERE name = ?
+    //TODO на занятии это разбирали, см. пример.
     public static Role getRole(Role objectRole) {
         return getAllRoles().stream()
                 .filter(role -> {
