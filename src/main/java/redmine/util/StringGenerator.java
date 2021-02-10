@@ -19,7 +19,7 @@ public class StringGenerator {
 
     public static String email (){
         StringBuilder sb = new StringBuilder();
-        return (sb.append(ENGLISH.charAt(new Random().nextInt(8)))+"@"+sb.append(ENGLISH_LOWER.charAt(new Random().nextInt(8)))+"."+sb.append(ENGLISH_LOWER.charAt(new Random().nextInt(3)))).toString();
+        return ("t"+sb.append(ENGLISH.charAt(new Random().nextInt(8)))+"@"+sb.append(ENGLISH_LOWER.charAt(new Random().nextInt(8)))+"."+sb.append(ENGLISH_LOWER.charAt(new Random().nextInt(3)))).toString();
 
 
     }
