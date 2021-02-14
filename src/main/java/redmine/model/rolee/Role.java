@@ -15,10 +15,10 @@ import java.util.Set;
 @EqualsAndHashCode
 @Accessors(chain = true)
 public class Role implements Generatable<Role> {
-    private String name;
+    private String name="alfkcsdv";
     private Integer id;
-    private Boolean assignable;
-    private Integer position;
+    private Boolean assignable=false;
+    private Integer position=1;
     private IssuesVisibility issuesVisibility=IssuesVisibility.ALL;
     private UsersVisibility usersVisibility=UsersVisibility.MEMBERS_OF_VISIBLE_PROJECT;
     private Set<RolePermission> rolePermissionSet;
