@@ -9,6 +9,7 @@ import redmine.api.implementations.RestRequest;
 import redmine.api.interfaces.ApiClient;
 import redmine.api.interfaces.Methods;
 import redmine.api.interfaces.Response;
+import redmine.dataBase.UserRequest;
 import redmine.model.dto.UserCreatingError;
 import redmine.model.dto.UserDTO;
 import redmine.model.dto.UserInfo;
@@ -21,7 +22,7 @@ public class TestCase1 {
     private Users user;
     private ApiClient apiClient;
 
-
+//TODO дописать обрезку даты
     @BeforeMethod
     public void testPrerequisite() {
 
@@ -71,7 +72,7 @@ public class TestCase1 {
         //Assert.assertEquals(userDTO.getUser().getCreated_on().truncatedTo(ChronoUnit.SECONDS),createUser.getUser().getCreated_on().truncatedTo(ChronoUnit.SECONDS));
         //Assert.assertEquals(userDTO.getUser().getLast_login_on().truncatedTo(ChronoUnit.SECONDS),createUser.getUser().getLast_login_on().truncatedTo(ChronoUnit.SECONDS));
         Assert.assertEquals(userDTO.getUser().getStatus(), createUser.getUser().getStatus());
-        System.out.println("Завершен1ый тест");
+        System.out.println("Завершен 1ый тест");
 
         //Отправить запрос POST на создание пользователя повторно с тем же телом запроса
         Response rsDubl = apiClient.request(new RestRequest("users.json", Methods.POST, null, body, null));
@@ -92,22 +93,44 @@ public class TestCase1 {
         Assert.assertEquals(errorRs1.getErrors().get(2), "Пароль недостаточной длины (не может быть меньше 8 символа)");
 
         //4. Отправить запрос PUT на изменение пользователя. Использовать данные из ответа запроса, выполненного в шаге №1, но при этом изменить поле status = 1
-        createUser.setUser(userInfo.setStatus(1));
+        String mail = userDTO.getUser().getMail();
+        String password = userDTO.getUser().getPassword();
+        createUser.setUser(userInfo.setStatus(1).setMail(mail).setPassword(password));
         String body2 = getGson().toJson(createUser);
-        String uri = String.format("users/%d.json", createUser.getUser().getId());
+        String uri = String.format("users/%d.json", userDTO.getUser().getId());
         System.out.println("__________________________________");
-        System.out.println(createUser.getUser().getId());
         Response responsePut = apiClient.request(new RestRequest(uri, Methods.PUT, null, body2, null));
         Assert.assertEquals(responsePut.getStatusCode(), 204);
+        Users createUserDB = UserRequest.getUser(user);
+        Assert.assertEquals((createUserDB.getStatus().toString()), "1");
+        System.out.println("прошел 4ый тест");
+
         //5. Отправить запрос GET на получение пользователя
+
         Response response = apiClient.request(new RestRequest(uri, Methods.GET, null, null, null));
-        Assert.assertEquals(response.getStatusCode(),200);
+        Assert.assertEquals(response.getStatusCode(), 200);
+        UserDTO userDto = response.getBody(UserDTO.class);
+        System.out.println("пошел 5ый тест");
+        //Проверки к п.1
+
+        Assert.assertNotNull(userDto.getUser().getId());
+        Assert.assertEquals(userDto.getUser().getLogin(), createUser.getUser().getLogin());
+        Assert.assertEquals(userDto.getUser().getAdmin(), createUser.getUser().getAdmin());
+        Assert.assertEquals(userDto.getUser().getFirstname(), createUser.getUser().getFirstname());
+        Assert.assertEquals(userDto.getUser().getLastname(), createUser.getUser().getLastname());
+        Assert.assertEquals(userDto.getUser().getMail(), createUser.getUser().getMail());
+        //Assert.assertEquals(userDTO.getUser().getCreated_on().truncatedTo(ChronoUnit.SECONDS),createUser.getUser().getCreated_on().truncatedTo(ChronoUnit.SECONDS));
+        //Assert.assertEquals(userDTO.getUser().getLast_login_on().truncatedTo(ChronoUnit.SECONDS),createUser.getUser().getLast_login_on().truncatedTo(ChronoUnit.SECONDS));
+        Assert.assertEquals(userDto.getUser().getStatus(), createUser.getUser().getStatus());
 
         //6. Отправить запрос DELETE на удаление пользователя
-        Response deleteUser = apiClient.request(new RestRequest(uri, Methods.DELETE, null, body2, null));
+        Response deleteUser = apiClient.request(new RestRequest(uri, Methods.DELETE, null, null, null));
         Assert.assertEquals(deleteUser.getStatusCode(), 204);
+        Users removeUser = UserRequest.getUser(user);
+        //Assert.assertNull(removeUser);
+
         //7. Отправить запрос DELETE на удаление пользователя (повторно)
-        Response delUser = apiClient.request(new RestRequest(uri, Methods.DELETE, null, body2, null));
+        Response delUser = apiClient.request(new RestRequest(uri, Methods.DELETE, null, null, null));
         Assert.assertEquals(delUser.getStatusCode(), 404);
     }
 }
