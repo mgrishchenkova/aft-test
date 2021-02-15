@@ -50,9 +50,10 @@ public class TestCase3 {
         Assert.assertEquals(userDto.getUser().getAdmin(), user1.getAdmin());
         Assert.assertEquals(userDto.getUser().getFirstname(), user1.getFirstname());
         Assert.assertEquals(userDto.getUser().getLastname(), user1.getLastname());
-        Assert.assertEquals(userDto.getUser().getCreated_on() ,user1.getCreated_on().toLocalDateTime().format(Users.formatter));
+
+        Assert.assertEquals(userDto.getUser().getCreated_on().toString(), user1.getCreated_on().toLocalDateTime().format(Users.formatter));
         // Assert.assertEquals(userDto.getUser().getLast_login_on(),user1.getLast_login_on());
-        //Assert.assertEquals(userDto.getUser().getApiKey(), user1.getApikey());
+        Assert.assertEquals(userDto.getUser().getApi_key(), user1.getApikey());
         //  2. Отправить запрос GET на получения пользователя из п.3, используя ключ API из п.2
         String uriUsersTo = String.format("users/%d.json", user2.getId());
         Response rs = apiClient.request(new RestRequest(uriUsersTo, Methods.GET, null, null, null));
@@ -64,7 +65,7 @@ public class TestCase3 {
         Assert.assertEquals(userDTO.getUser().getLastname(), user2.getLastname());
         // Assert.assertEquals(userDTO.getUser().getCreated_on() ,user1.getCreated_on());
         // Assert.assertEquals(userDTO.getUser().getLast_login_on(),user1.getLast_login_on());
-        //Assert.assertNull(userDTO.getUser().getApiKey());
+        Assert.assertNull(userDTO.getUser().getApi_key());
        // Assert.assertNull(userDTO.getUser().getAdmin());
     }
 }
