@@ -16,6 +16,8 @@ import redmine.model.dto.UserInfo;
 import redmine.model.user.Users;
 import redmine.util.StringGenerator;
 
+import java.time.temporal.ChronoUnit;
+
 import static redmine.util.GsonHelper.getGson;
 
 public class TestCase1 {
@@ -26,9 +28,7 @@ public class TestCase1 {
     @BeforeMethod
     public void testPrerequisite() {
 
-        user = new Users();
-        user.setAdmin(true);
-        user.generate();
+        user = new Users().setAdmin(true).generate();
         apiClient = new RestApiClient(user);
 
         //ВЫНЕСТИ В МЕТОД!!!
@@ -69,7 +69,7 @@ public class TestCase1 {
         Assert.assertEquals(userDTO.getUser().getFirstname(), createUser.getUser().getFirstname());
         Assert.assertEquals(userDTO.getUser().getLastname(), createUser.getUser().getLastname());
         Assert.assertEquals(userDTO.getUser().getMail(), createUser.getUser().getMail());
-        //Assert.assertEquals(userDTO.getUser().getCreated_on().truncatedTo(ChronoUnit.SECONDS),createUser.getUser().getCreated_on().truncatedTo(ChronoUnit.SECONDS));
+        Assert.assertEquals(userDTO.getUser().getCreated_on().truncatedTo(ChronoUnit.SECONDS),createUser.getUser().getCreated_on().truncatedTo(ChronoUnit.SECONDS));
         //Assert.assertEquals(userDTO.getUser().getLast_login_on().truncatedTo(ChronoUnit.SECONDS),createUser.getUser().getLast_login_on().truncatedTo(ChronoUnit.SECONDS));
         Assert.assertEquals(userDTO.getUser().getStatus(), createUser.getUser().getStatus());
         System.out.println("Завершен 1ый тест");
@@ -97,7 +97,7 @@ public class TestCase1 {
         String password = userDTO.getUser().getPassword();
         createUser.setUser(userInfo.setStatus(1).setMail(mail).setPassword(password));
         String body2 = getGson().toJson(createUser);
-        String uri = String.format("users/%d.json", userDTO.getUser().getId());
+        String uri = String.format("users/%d.json", user.getId());
         System.out.println("__________________________________");
         Response responsePut = apiClient.request(new RestRequest(uri, Methods.PUT, null, body2, null));
         Assert.assertEquals(responsePut.getStatusCode(), 204);

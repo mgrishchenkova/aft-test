@@ -8,6 +8,7 @@ import redmine.util.StringGenerator;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static org.apache.commons.codec.digest.DigestUtils.sha1Hex;
 
@@ -39,6 +40,7 @@ public class Users implements Generatable<Users> {
     private Boolean must_change_passwd=false;
     private Timestamp passwd_changed_on=Timestamp.valueOf(LocalDateTime.now());
     private String apikey =StringGenerator.stringRandom(39,"0123456789abcdef");
+    public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
 
 
