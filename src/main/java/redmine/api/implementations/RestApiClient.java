@@ -20,8 +20,8 @@ public class RestApiClient implements ApiClient {
 
     public RestApiClient(Users user) {
         Objects.requireNonNull(user, "Пользователь должен быть инициализирован");
-        Objects.requireNonNull(user.getApikey(), "У пользователя должен быть создан ключ API");
-        token = user.getApikey();
+        Objects.requireNonNull(user.getApi_key(), "У пользователя должен быть создан ключ API");
+        token = user.getApi_key();
     }
 
 

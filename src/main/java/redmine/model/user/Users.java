@@ -25,7 +25,7 @@ public class Users implements Generatable<Users> {
     private String lastname=StringGenerator.stringRandom(12,StringGenerator.ENGLISH);;
     private Boolean admin=false;
     private Integer status=1;
-    private String email=StringGenerator.email();
+    private String mail=StringGenerator.email();
     private String password=StringGenerator.stringRandom(9,StringGenerator.ENGLISH);
     private String salt= StringGenerator.stringRandom(31,"0123456789abcdef");
     private String hashed_password=sha1Hex(salt + sha1Hex(password));
@@ -39,7 +39,7 @@ public class Users implements Generatable<Users> {
     private  String mail_notification="all";
     private Boolean must_change_passwd=false;
     private Timestamp passwd_changed_on=Timestamp.valueOf(LocalDateTime.now());
-    private String apikey =StringGenerator.stringRandom(39,"0123456789abcdef");
+    private String api_key =StringGenerator.stringRandom(39,"0123456789abcdef");
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
 

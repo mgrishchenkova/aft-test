@@ -11,15 +11,15 @@ import java.time.LocalDateTime;
 public class UserInfo {
     private Integer id;
     private String login=StringGenerator.stringRandom(8,StringGenerator.ENGLISH);
-    private Boolean admin=false;
+    private Boolean admin;
     private String firstname=StringGenerator.stringRandom(12,StringGenerator.ENGLISH);
     private String lastname=StringGenerator.stringRandom(12,StringGenerator.ENGLISH);
     private String mail=StringGenerator.email();
     private LocalDateTime created_on=LocalDateTime.now();
     private LocalDateTime last_login_on=LocalDateTime.now();
-    private String api_key=StringGenerator.stringRandom(31,"0123456789abcdef");
+    private String api_key;
     private Integer status=2;
-    private String password=StringGenerator.stringRandom(9,StringGenerator.ENGLISH);
+    private String password;
 
 
 }

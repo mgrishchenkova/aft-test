@@ -30,12 +30,12 @@ public class TestCase2 {
                 "VALUES(DEFAULT, ?, ?, ?, ?, ?)RETURNING id;\n";
 
         Manager.dbConnection.executePreparedQuery(addToken,
-                user.getId(),"api",user.getApikey(),user.getCreated_on(),user.getUpdated_on());
+                user.getId(),"api",user.getApi_key(),user.getCreated_on(),user.getUpdated_on());
         String emailAdd="INSERT INTO public.email_addresses\n" +
                 "(id, user_id, address, is_default, \"notify\", created_on, updated_on)\n" +
                 "VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)RETURNING id;;\n";
         Manager.dbConnection.executePreparedQuery(emailAdd,
-                user.getId(),user.getEmail(),true,true, user.getCreated_on(),user.getUpdated_on());
+                user.getId(),user.getMail(),true,true, user.getCreated_on(),user.getUpdated_on());
 
     }
     @Test
