@@ -38,7 +38,7 @@ public class TestCase2 {
                 user.getId(),user.getMail(),true,true, user.getCreated_on(),user.getUpdated_on());
 
     }
-    @Test
+    @Test(description = "Создание пользователя. Пользователь без прав администратора")
     public void createUserNotAdmin(){
         UserDTO userDTO=new UserDTO().setUser(new UserInfo());
         String body = getGson().toJson(userDTO);

@@ -1,4 +1,4 @@
-package API.testApi;
+package API;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;

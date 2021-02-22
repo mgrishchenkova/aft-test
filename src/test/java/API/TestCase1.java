@@ -1,5 +1,6 @@
 package API;
 
+import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -24,6 +25,7 @@ public class TestCase1 {
 
 
     @BeforeMethod
+    @Description("Заведение пользователя в системе с правами админа и ключем API_KEY")
     public void testPrerequisite() {
 
         user = new Users().setAdmin(true).generate();
@@ -44,7 +46,7 @@ public class TestCase1 {
 
     }
 
-    @Test
+    @Test(description = "Создание, изменение, получение, удаление пользователя. Администратор системы")
     public void testPostUser() {
 
         String password=StringGenerator.stringRandom(7,StringGenerator.ENGLISH);

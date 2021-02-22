@@ -10,7 +10,7 @@
     <properties>
         <testng.version>7.1.0</testng.version>
         <lombok.version>1.18.16</lombok.version>
-
+        <aspectj.version>1.8.10</aspectj.version>
         <cucumber.version>4.2.4</cucumber.version>
         <allure.version>2.13.8</allure.version>
 
@@ -18,27 +18,28 @@
     <build>
         <plugins>
             <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <configuration>
-                <argLine>-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/1.8.10/aspectjweaver-$1.8.10.jar"</argLine>
-                <systemProperties>
-                    <property>
-                        <name>allure.results.directory</name>
-                        <value>${project.build.directory}/allure-results</value>
-                    </property>
-                </systemProperties>
-            </configuration>
-            <dependencies>
-                <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
-                <dependency>
-                    <groupId>org.aspectj</groupId>
-                    <artifactId>aspectjweaver</artifactId>
-                    <version>1.8.10</version>
-                </dependency>
-
-            </dependencies>
-        </plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.20</version>
+                <configuration>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <systemPropertyVariables>
+                        <allure.results.directory>${project.build.directory}\allure-results</allure.results.directory>
+                        <dataproviderthreadcount>1</dataproviderthreadcount>
+                        <parallel>methods</parallel>
+                    </systemPropertyVariables>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -55,14 +56,14 @@
     <dependency>
         <groupId>org.testng</groupId>
         <artifactId>testng</artifactId>
-        <version>7.1.0</version>
+        <version>${testng.version}</version>
         <scope>test</scope>
     </dependency>
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.16</version>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
