@@ -37,16 +37,17 @@ public class TestCase4 {
 
 
     }
-@Test
-    public void deleteUsers(){
-        String uri=String.format("users/%d.json", user2.getId());
-    Response response = apiClient.request(new RestRequest(uri, Methods.DELETE, null, null, null));
-    Assert.assertEquals(response.getStatusCode(), 403);
-    Users redDBUs = UserRequest.getUser(user2);
 
-    String uriUsr=String.format("users/%d.json", user1.getId());
-    Response rs = apiClient.request(new RestRequest(uriUsr, Methods.DELETE, null, null, null));
-    Assert.assertEquals(response.getStatusCode(), 403);
-    Users redDBUsrs = UserRequest.getUser(user1);
-}
+    @Test(description = " Удаление пользователей. Пользователь без прав администратора")
+    public void deleteUsers() {
+        String uri = String.format("users/%d.json", user2.getId());
+        Response response = apiClient.request(new RestRequest(uri, Methods.DELETE, null, null, null));
+        Assert.assertEquals(response.getStatusCode(), 403);
+        Users redDBUs = UserRequest.getUser(user2);
+
+        String uriUsr = String.format("users/%d.json", user1.getId());
+        Response rs = apiClient.request(new RestRequest(uriUsr, Methods.DELETE, null, null, null));
+        Assert.assertEquals(response.getStatusCode(), 403);
+        Users redDBUsrs = UserRequest.getUser(user1);
+    }
 }

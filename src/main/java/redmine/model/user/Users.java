@@ -26,12 +26,12 @@ public class Users implements Generatable<Users> {
     private Boolean admin=false;
     private Integer status=1;
     private String mail=StringGenerator.email();
-    private String password=StringGenerator.stringRandom(9,StringGenerator.ENGLISH);
+    private String password=StringGenerator.stringRandom(7,StringGenerator.ENGLISH);
     private String salt= StringGenerator.stringRandom(31,"0123456789abcdef");
     private String hashed_password=sha1Hex(salt + sha1Hex(password));
     private Timestamp last_login_on=Timestamp.valueOf(LocalDateTime.now());
     private String language="ru";
-    private Integer auth_source_id=1;
+    private Integer auth_source_id;
     private Timestamp created_on=Timestamp.valueOf(LocalDateTime.now());
     private Timestamp updated_on=Timestamp.valueOf(LocalDateTime.now());
     private String type="User";

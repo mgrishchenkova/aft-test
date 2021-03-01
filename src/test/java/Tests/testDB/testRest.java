@@ -1,4 +1,4 @@
-package API.testApi;
+package Tests.testDB;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -9,30 +9,26 @@ import redmine.api.interfaces.ApiClient;
 import redmine.api.interfaces.Methods;
 import redmine.api.interfaces.Request;
 import redmine.api.interfaces.Response;
-import redmine.model.dto.RoleDto;
 import redmine.model.user.Users;
 
-public class testGetUser {
+public class testRest {
     private Users user;
     private ApiClient apiClient;
 
+
     @BeforeMethod
     public void prepareFixtures() {
-        user = new Users().generate();
-
-        apiClient = new RestApiClient(user);
+        Users user = new Users().generate();
+        apiClient= new RestApiClient(user);
     }
 
     @Test
-    public void getUsers() {
-        String uri = String.format("users/%d.json", user.getId());
-        Request request = new RestRequest(uri, Methods.GET, null, null, null);
+    public void testRoleGet() {
+        Request request = new RestRequest("roles.json", Methods.GET, null, null, null);
         Response response = apiClient.request(request);
+        Assert.assertEquals(response.getStatusCode(),200);
 
-        Assert.assertEquals(response.getStatusCode(), 200);
-
-        RoleDto roleDto = response.getBody(RoleDto.class);
-
-
+        Assert.assertTrue(response.getHeaders().containsKey("Content-Type"));
     }
+
 }

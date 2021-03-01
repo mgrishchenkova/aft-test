@@ -40,7 +40,7 @@ public class TestCase3 {
 
     }
 
-    @Test
+    @Test(description = "Получение пользователей. Пользователь без прав администратора")
     public void testGet() {
         // 1. Отправить запрос GET на получение пользователя из п.1, используя ключ API из п.2
         String uri = String.format("users/%d.json", user1.getId());

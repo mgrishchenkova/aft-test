@@ -1,4 +1,4 @@
-package testDB;
+package Tests.testDB;
 
 import org.testng.annotations.Test;
 import redmine.dataBase.RoleRequests;

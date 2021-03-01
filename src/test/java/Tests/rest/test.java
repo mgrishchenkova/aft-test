@@ -1,4 +1,4 @@
-package API.testApi;
+package Tests.rest;
 
 import io.restassured.http.ContentType;
 import io.restassured.http.Method;
