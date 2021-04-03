@@ -8,7 +8,7 @@ import redmine.Manager.Manager;
 /**
  * страница входа REDMINE
  */
-public class LoginPage {
+public class LoginPage extends AbstractPage{
 
 
 

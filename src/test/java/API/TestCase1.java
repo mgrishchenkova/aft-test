@@ -1,6 +1,5 @@
 package API;
 
-import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -25,7 +24,7 @@ public class TestCase1 {
 
 
     @BeforeMethod
-    @Description("Заведение пользователя в системе с правами админа и ключем API_KEY")
+    //@Description("Заведение пользователя в системе с правами админа и ключем API_KEY")
     public void testPrerequisite() {
 
         user = new Users().setAdmin(true).generate();

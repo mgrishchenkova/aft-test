@@ -1,6 +1,5 @@
 package redmine.api.implementations;
 
-import io.qameta.allure.Allure;
 import io.restassured.http.ContentType;
 import io.restassured.http.Method;
 import io.restassured.specification.RequestSpecification;
@@ -43,12 +42,9 @@ public class RestApiClient implements ApiClient {
         io.restassured.response.Response response = specification.log().all().request(method);
         response.then().log().all();
         Response restResponse = new RestResponse(response);
-        addAttachments(request, restResponse);
+        //addAttachments(request, restResponse);
         return restResponse;
     }
 
-    private void addAttachments(Request request, Response response) {
-        Allure.addAttachment("Запрос", request.toString());
-        Allure.addAttachment("Ответ", response.toString());
-    }
+
 }

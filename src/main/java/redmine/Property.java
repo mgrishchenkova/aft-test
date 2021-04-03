@@ -9,7 +9,7 @@ public class Property {
 
     static {
         try {
-            property.load(new FileInputStream("src/test/java/resources/local.properties"));
+            property.load(new FileInputStream("src/test/resources/local.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -2,32 +2,67 @@ package redmine.ui.pages;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import redmine.Manager.Manager;
 
 /**
  * Страница заголовка начальной страницы
  */
-public class HeaderPage {
+public class HeaderPage extends AbstractPage {
 
-    //TODO хом. проекты, логгедас
 
-    @FindBy(xpath = "//a[@class=\"home\"]")
-    private WebElement home;
+    @CucumberName("Домашняя страница")
+    @FindBy(xpath = "//a[@class=\"home\"]") //домашняя страница
+    public WebElement home;
 
-    @FindBy(xpath = "//a[@class=\"projects\"]")
-    private WebElement projects;
+    @CucumberName("Проекты")
+    @FindBy(xpath = "//a[@class=\"projects\"]") // проекты
+    public WebElement projects;
 
-    @FindBy(xpath = "//div[@id=\"loggedas\"]")
-    private WebElement loggedasElement;
+    @CucumberName("Вошли как")
+    @FindBy(xpath = "//div[@id=\"loggedas\"]") //Вошли как
+    public WebElement loggedasElement;
 
-    public HeaderPage() {
+    @CucumberName("Моя страница")
+    @FindBy(xpath = "//a[@class=\"my-page\"]") //моя страница
+    public WebElement myPage;
 
-        PageFactory.initElements(Manager.driver(), this);
+    @CucumberName("Администрирование")
+    @FindBy(xpath = "//a[@class=\"administration\"]") //администрирование
+    public WebElement administration;
+
+    @CucumberName("Помощь")
+    @FindBy(xpath = "//a[@class=\"help\"]") //помощь
+    public WebElement help;
+
+    @CucumberName("Моя учётная запись")
+    @FindBy(xpath = "//a[@class=\"my-account\"]")// Моя учётная запись
+    public WebElement myAccount;
+
+    @CucumberName("Выйти")
+    @FindBy(xpath = "//a[@class=\"logout\"]") //Выйти
+    public WebElement logout;
+
+    @CucumberName("Поиск")
+    @FindBy(xpath = "//a[@href=\"/search\"]") //Выйти
+    public WebElement search;
+
+    @CucumberName("Регистрация")
+    @FindBy(xpath = "//a[@class=\"register\"]") //Выйти
+    public WebElement register;
+
+    @CucumberName("Войти")
+    @FindBy(xpath = "//a[@class=\"login\"]") //Выйти
+    public WebElement login;
+
+    @CucumberName("Ваша учётная запись создана и ожидает подтверждения администратора.")
+    @FindBy(xpath = " //div[@class=\"flash error\"]") //Выйти
+    public WebElement errors;
+
+    public String loggedAs() {
+        return loggedasElement.getText();
     }
 
-    public String loggedAs(){
-        return loggedasElement.getText();
+    public String getErrorsText() {
+        return errors.getText();
     }
 
 }

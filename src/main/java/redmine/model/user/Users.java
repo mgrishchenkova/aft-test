@@ -12,19 +12,19 @@ import java.time.format.DateTimeFormatter;
 
 import static org.apache.commons.codec.digest.DigestUtils.sha1Hex;
 
-@Getter
-@Setter
+
 @NoArgsConstructor
 @EqualsAndHashCode
 @Accessors(chain = true)
 @Data
 public class Users implements Generatable<Users> {
+
     private Integer id;
     private String login=StringGenerator.stringRandom(8,StringGenerator.ENGLISH);
     private String firstname=StringGenerator.stringRandom(12,StringGenerator.ENGLISH);;
     private String lastname=StringGenerator.stringRandom(12,StringGenerator.ENGLISH);;
     private Boolean admin=false;
-    private Integer status=1;
+    private Integer status;
     private String mail=StringGenerator.email();
     private String password=StringGenerator.stringRandom(7,StringGenerator.ENGLISH);
     private String salt= StringGenerator.stringRandom(31,"0123456789abcdef");

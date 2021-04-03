@@ -29,10 +29,10 @@ public class NyFistTest {
         Manager.dbConnection.executePreparedQuery(emailAdd,
                 user.getId(), user.getMail(), true, true, user.getCreated_on(), user.getUpdated_on());
 
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
+ System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
 
-        Manager.driver();
-        Manager.openPage();
+    //   Manager.driver();
+        Manager.openPage("login");
     }
     @Test
     public void myFirstTest() {
@@ -44,6 +44,6 @@ public class NyFistTest {
 
     @AfterMethod
     public void testChrome() {
-        Manager.quitDriver();
+        Manager.driverQuit();
     }
 }
