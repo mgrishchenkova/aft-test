@@ -23,5 +23,11 @@ public class LoginSteps {
 
     }
 
+    @И("На странице {string} нажать кнопку {string}")
+    public void openProject(){
+
+    }
+
+
 
 }

@@ -5,7 +5,6 @@ import lombok.SneakyThrows;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import redmine.Property;
@@ -97,9 +96,6 @@ public class Manager {
                 case "chrome":
                     System.setProperty("webdriver.chrome.driver", Property.getStringProperties("webdriver.chrome.driver"));
                     return new ChromeDriver();
-                case "firefox":
-                    System.setProperty("webdriver.gecko.driver", Property.getStringProperties("webdriver.gecko.driver"));
-                    return new FirefoxDriver();
                 default:
                     throw new IllegalArgumentException("Неизвестный тип браузера");
             }

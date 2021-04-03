@@ -13,13 +13,15 @@ public class AssertionSteps {
                 BrowseUtils.isElementCurrentlyPresent(CucumberPageObjectHelper.getElementBy(fieldName)));
     }
 
+
     @И("Не отображены элементы {string}")
     public void notAssertProjectElementIsDisplayed(String fieldName) {
         Assert.assertFalse(
                 BrowseUtils.isElementCurrentlyPresent(CucumberPageObjectHelper.getElementBy(fieldName)));
     }
+
     @И("Будет отображена ошибка {string}")
-    public void errors(String fieldName){
+    public void errors(String fieldName) {
         Assert.assertTrue(
                 BrowseUtils.isElementCurrentlyPresent(CucumberPageObjectHelper.getElementBy(fieldName)));
 

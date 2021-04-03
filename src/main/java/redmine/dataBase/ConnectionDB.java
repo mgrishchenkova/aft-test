@@ -41,7 +41,9 @@ public class ConnectionDB {
         connection = DriverManager.getConnection(url);
     }
 
-//TODO написать докуменцию к методам
+    /**
+     * Выполнение sql-запроса без параметров
+     */
     @SneakyThrows
     public List<Map<String, Object>> executeQuery(String query) {
         Statement statement = connection.createStatement();
@@ -67,6 +69,9 @@ public class ConnectionDB {
 
     }
 
+    /**
+    *Выполнение sql-запроса, содержаший параметры
+     */
     @SneakyThrows
     public List<Map<String, Object>> executePreparedQuery(String query, Object... parameters) {
         PreparedStatement statement = connection.prepareStatement(query);

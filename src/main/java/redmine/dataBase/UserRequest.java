@@ -22,8 +22,6 @@ public class UserRequest {
                     user.setLastname((String) map.get("lastname"));
                     user.setAdmin((Boolean) map.get("admin"));
                    user.setStatus((Integer) map.get("status"));
-                    //user.setEmail((String)map.get("email"));
-                    //user.setPassword((String) map.get("password"));
                     user.setHashed_password((String)map.get("hashed_password"));
                     user.setSalt((String) map.get("salt"));
                     user.setLast_login_on((Timestamp) map.get("last_login_on"));

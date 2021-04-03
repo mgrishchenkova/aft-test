@@ -2,6 +2,7 @@ package steps;
 
 import cucumber.api.java.ru.Пусть;
 import redmine.Manager.Context;
+import redmine.model.project.Project;
 import redmine.model.user.Users;
 
 import java.util.Map;
@@ -19,5 +20,15 @@ public class GenerationSteps {
         }
         user.generate();
         Context.getStash().put(stashId,user);
+    }
+
+    @Пусть("В системе заведен проект {string} с параметрами:")
+    public void createAndSAveproject(String stashId, Map<String,String> params){
+        Project project= new Project();
+        if (params.containsKey("is_public")){
+            project.setIs_public(Boolean.parseBoolean(params.get("is_public")));
+        }
+        project.generate();
+        Context.getStash().put(stashId,project);
     }
 }

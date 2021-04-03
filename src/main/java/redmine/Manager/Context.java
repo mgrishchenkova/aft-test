@@ -28,10 +28,10 @@ public class Context {
         }
     }
 
-   // @Step("Сущности в контексте автотеста")
- //   public static void saveStashToAllure() {
-      //  getStash().getEntities().forEach(
+    // @Step("Сущности в контексте автотеста")
+    //   public static void saveStashToAllure() {
+    //  getStash().getEntities().forEach(
     //            (key, value) -> Allure.addAttachment(key, value.toString())
-      //  );
-   // }
+    //  );
+    // }
 }
