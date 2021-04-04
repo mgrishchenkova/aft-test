@@ -1,12 +1,18 @@
 package steps;
 
 import cucumber.api.java.bg.И;
+import cucumber.api.java.ru.То;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.testng.Assert;
+import redmine.Manager.Context;
+import redmine.model.project.Project;
 import redmine.ui.pages.CucumberPageObjectHelper;
 import redmine.ui.pages.HeaderPage;
 import redmine.ui.pages.ProjectsPage;
 import redmine.util.BrowseUtils;
 
+import static redmine.Manager.Manager.driver;
 import static redmine.ui.pages.Pages.getPage;
 
 public class AssertionSteps {
@@ -40,4 +46,20 @@ public class AssertionSteps {
     public void openPageHome(){
         Assert.assertTrue(BrowseUtils.isElementCurrentlyPresent(getPage(HeaderPage.class).homePage));}
 
+    @То("Отображается проект {string}")
+    public void isProjectElement(String projectStashId) {
+        Project project= Context.getStash().get(projectStashId,Project.class);
+        Assert.assertEquals(driver().findElement(By.xpath(String.format("//a[text()='%s']", project.getName()))).getText(),project.getName());
+    }
+
+    @cucumber.api.java.ru.И("Не отображается проект {string}")
+    public void isNotProjectElement(String projectName) {
+        ProjectsPage page = new ProjectsPage();
+        try {
+            page.projectName(projectName).isDisplayed();
+            Assert.fail();
+        } catch (NoSuchElementException ignored) {
+        }
+
+    }
 }
