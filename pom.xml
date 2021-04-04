@@ -133,6 +133,11 @@
             <artifactId>allure-java-commons</artifactId>
             <version>${allure.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.12</version>
+        </dependency>
 
     </dependencies>
 </project>

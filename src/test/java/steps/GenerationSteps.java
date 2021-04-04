@@ -23,7 +23,7 @@ public class GenerationSteps {
     }
 
     @Пусть("В системе заведен проект {string} с параметрами:")
-    public void createAndSAveproject(String stashId, Map<String,String> params){
+    public void createAndSaveProject(String stashId, Map<String,String> params){
         Project project= new Project();
         if (params.containsKey("is_public")){
             project.setIs_public(Boolean.parseBoolean(params.get("is_public")));
@@ -31,4 +31,5 @@ public class GenerationSteps {
         project.generate();
         Context.getStash().put(stashId,project);
     }
+
 }

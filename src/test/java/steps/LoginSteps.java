@@ -12,7 +12,6 @@ public class LoginSteps {
 
     @И("Открыт браузер на главной странице")
     public void openPage() {
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
         Manager.openPage("login");
     }
 
@@ -23,10 +22,6 @@ public class LoginSteps {
 
     }
 
-    @И("На странице {string} нажать кнопку {string}")
-    public void openProject(){
-
-    }
 
 
 

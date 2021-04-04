@@ -8,6 +8,7 @@ import redmine.Manager.Manager;
 /**
  * страница входа REDMINE
  */
+@CucumberName("Вход в Redmine")
 public class LoginPage extends AbstractPage{
 
 
@@ -20,6 +21,10 @@ public class LoginPage extends AbstractPage{
 
     @FindBy(xpath = "//input[@id=\"login-submit\"]")
     private WebElement submit;
+
+    @CucumberName("Ваша учётная запись создана и ожидает подтверждения администратора.")
+    @FindBy(xpath = " //div[@class=\"flash error\"]") //Выйти
+    public WebElement errors;
 
     public LoginPage() {
 

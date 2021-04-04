@@ -6,8 +6,12 @@ import org.openqa.selenium.support.FindBy;
 /**
  * Страница заголовка начальной страницы
  */
+@CucumberName("Заголовок")
 public class HeaderPage extends AbstractPage {
 
+    @CucumberName("Домашняя страница")
+    @FindBy(xpath = "//h2[text()='Домашняя страница']")
+    public WebElement homePage;
 
     @CucumberName("Домашняя страница")
     @FindBy(xpath = "//a[@class=\"home\"]") //домашняя страница
@@ -53,16 +57,12 @@ public class HeaderPage extends AbstractPage {
     @FindBy(xpath = "//a[@class=\"login\"]") //Выйти
     public WebElement login;
 
-    @CucumberName("Ваша учётная запись создана и ожидает подтверждения администратора.")
-    @FindBy(xpath = " //div[@class=\"flash error\"]") //Выйти
-    public WebElement errors;
+
 
     public String loggedAs() {
         return loggedasElement.getText();
     }
 
-    public String getErrorsText() {
-        return errors.getText();
-    }
+
 
 }
