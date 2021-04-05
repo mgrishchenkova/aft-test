@@ -33,8 +33,8 @@ public class GenerationSteps {
         Context.getStash().put(stashId,project);
     }
 
-    @Пусть("В системе заведена роль {string} с параметрами:")
-    public void createAndSaveRole(String stashId, Map<String,String> params){
+    @Пусть("В системе заведена роль {string} с параметрами по умолчанию:")
+    public void createAndSaveRole(String stashId){
         Role role= new Role();
         Context.getStash().put(stashId,role);
     }
