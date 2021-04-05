@@ -99,7 +99,73 @@ public class AssertionSteps {
                     .collect(Collectors.toList());
             Assert.assertEquals(listPage, listPageSort);
         }
+        if (sortName == "имени" && typeSort == "возрастанию") {
+            List<String> listPage = getPage(AdministrationPage.class).firstName
+                    .stream()
+                    .map(WebElement::getText)
+                    .sorted(String::compareToIgnoreCase)
+                    .collect(Collectors.toList());
+            List<String> listPageSort = listPage.stream()
+                    .sorted(String::compareToIgnoreCase)
+                    .collect(Collectors.toList());
+            Assert.assertEquals(listPage, listPageSort);
+        }
+        if (sortName == "имени" && typeSort == "убыванию") {
+            List<String> listPage = getPage(AdministrationPage.class).firstName
+                    .stream()
+                    .map(WebElement::getText)
+                    .sorted(String.CASE_INSENSITIVE_ORDER.reversed())
+                    .collect(Collectors.toList());
+            List<String> listPageSort = listPage.stream()
+                    .sorted(String.CASE_INSENSITIVE_ORDER.reversed())
+                    .collect(Collectors.toList());
+            Assert.assertEquals(listPage, listPageSort);
+        }
+        if (sortName == "фамилии" && typeSort == "возрастанию") {
+            List<String> listPage = getPage(AdministrationPage.class).lastName
+                    .stream()
+                    .map(WebElement::getText)
+                    .collect(Collectors.toList());
+            List<String> listPageSort = listPage.stream()
+                    .sorted(String::compareToIgnoreCase)
+                    .collect(Collectors.toList());
+            Assert.assertEquals(listPage, listPageSort);
+        }
+        if (sortName == "фамилии" && typeSort == "убыванию") {
+            List<String> listPage = getPage(AdministrationPage.class).lastName
+                    .stream()
+                    .map(WebElement::getText)
+                    .collect(Collectors.toList());
+            List<String> listPageSort = listPage.stream()
+                    .sorted(String.CASE_INSENSITIVE_ORDER.reversed())
+                    .collect(Collectors.toList());
+            Assert.assertEquals(listPage, listPageSort);
+        }
 
 
+    }
+
+    @И("Таблица с пользователями не отсортирована по {string}")
+    public void notSorted(String nameElement) {
+        if (nameElement == "фамилии") {
+            List<String> listPage = getPage(AdministrationPage.class).lastName
+                    .stream()
+                    .map(WebElement::getText)
+                    .collect(Collectors.toList());
+            List<String> listPageSort = listPage.stream()
+                    .sorted(String::compareToIgnoreCase)
+                    .collect(Collectors.toList());
+            Assert.assertNotEquals(listPage, listPageSort);
+        }
+        if (nameElement == "имени") {
+            List<String> listPage = getPage(AdministrationPage.class).firstName
+                    .stream()
+                    .map(WebElement::getText)
+                    .collect(Collectors.toList());
+            List<String> listPageSort = listPage.stream()
+                    .sorted(String.CASE_INSENSITIVE_ORDER.reversed())
+                    .collect(Collectors.toList());
+            Assert.assertNotEquals(listPage, listPageSort);
+        }
     }
 }

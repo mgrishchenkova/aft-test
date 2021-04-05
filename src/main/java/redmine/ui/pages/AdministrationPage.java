@@ -24,9 +24,17 @@ public class AdministrationPage extends AbstractPage {
     public List<WebElement> userName;
 
     @FindBy(xpath = "//td[@class=\"firstname\"]")
-    private List<WebElement> firstname;
+    public List<WebElement> firstName;
 
     @FindBy(xpath = "//td[@class=\"lastname\"]")
-    private List<WebElement> lastname;
+    public List<WebElement> lastName;
+
+    @CucumberName("Имя")
+    @FindBy(xpath = "//a[text()='Имя']")
+    public WebElement firstNameElement;
+
+    @CucumberName("Фамилия")
+    @FindBy(xpath = "//a[text()='Фамилия']")
+    public WebElement lastNameElement;
 
 }
