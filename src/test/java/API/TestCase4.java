@@ -48,6 +48,6 @@ public class TestCase4 {
         String uriUsr = String.format("users/%d.json", user1.getId());
         Response rs = apiClient.request(new RestRequest(uriUsr, Methods.DELETE, null, null, null));
         Assert.assertEquals(response.getStatusCode(), 403);
-        Users redDBUsrs = UserRequest.getUser(user1);
+        Users redDBUsers = UserRequest.getUser(user1);
     }
 }

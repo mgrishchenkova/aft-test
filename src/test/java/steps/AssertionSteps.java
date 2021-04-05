@@ -52,7 +52,7 @@ public class AssertionSteps {
         Assert.assertEquals(driver().findElement(By.xpath(String.format("//a[text()='%s']", project.getName()))).getText(),project.getName());
     }
 
-    @cucumber.api.java.ru.И("Не отображается проект {string}")
+    @И("Не отображается проект {string}")
     public void isNotProjectElement(String projectName) {
         ProjectsPage page = new ProjectsPage();
         try {

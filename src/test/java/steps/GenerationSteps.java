@@ -3,6 +3,7 @@ package steps;
 import cucumber.api.java.ru.Пусть;
 import redmine.Manager.Context;
 import redmine.model.project.Project;
+import redmine.model.rolee.Role;
 import redmine.model.user.Users;
 
 import java.util.Map;
@@ -30,6 +31,12 @@ public class GenerationSteps {
         }
         project.generate();
         Context.getStash().put(stashId,project);
+    }
+
+    @Пусть("В системе заведена роль {string} с параметрами:")
+    public void createAndSaveRole(String stashId, Map<String,String> params){
+        Role role= new Role();
+        Context.getStash().put(stashId,role);
     }
 
 }
