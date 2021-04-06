@@ -7,14 +7,15 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import redmine.Manager.Context;
+import redmine.Manager.Manager;
+import redmine.cucumber.ParametersValidator;
 import redmine.model.project.Project;
-import redmine.ui.pages.AdministrationPage;
-import redmine.ui.pages.CucumberPageObjectHelper;
-import redmine.ui.pages.HeaderPage;
-import redmine.ui.pages.ProjectsPage;
+import redmine.model.user.Users;
+import redmine.ui.pages.*;
 import redmine.util.BrowseUtils;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static redmine.Manager.Manager.driver;
@@ -42,15 +43,19 @@ public class AssertionSteps {
 
     }
 
-    @И("Открыта страница Проекты")
-    public void openPageProject() {
-        Assert.assertTrue(BrowseUtils.isElementCurrentlyPresent(getPage(ProjectsPage.class).projects));
+    @И("Будет открыта страница {string}")
+    public void openPageProject(String pageName) {
+        switch (pageName) {
+            case "Проекты":
+                Assert.assertTrue(BrowseUtils.isElementCurrentlyPresent(getPage(ProjectsPage.class).projects));
+            case "Домашняя страница":
+                Assert.assertTrue(BrowseUtils.isElementCurrentlyPresent(getPage(HeaderPage.class).homePage));
+            case "Администрирование":
+                Assert.assertTrue(BrowseUtils.isElementCurrentlyPresent(getPage(AdministrationPage.class).adminPage));
+
+        }
     }
 
-    @И("Будет открыта Домашняя страница")
-    public void openPageHome() {
-        Assert.assertTrue(BrowseUtils.isElementCurrentlyPresent(getPage(HeaderPage.class).homePage));
-    }
 
     @То("Отображается проект {string}")
     public void isProjectElement(String projectStashId) {
@@ -75,6 +80,24 @@ public class AssertionSteps {
         Assert.assertTrue(
                 BrowseUtils.isElementCurrentlyPresent(element)
         );
+    }
+
+    @И("На странице \"Пользователи\" отображается элемент Пользователь {string} создан.")
+    public void assertFieldUserLogin(String stashId) {
+        Users user = (Users) Context.getStash().get(stashId);
+        String element = String.format("Пользователь %s создан.", user.getLogin());
+        String elementForm = UserPage.createUserText();
+        Assert.assertEquals(element, elementForm);
+    }
+
+    @И("На главной странице пользователя {string} элемент Вошли как имеет текст {string}")
+    public void assertFieldLoggedAS(String stashIdUser, String cucu) {
+        Users user = Context.getStash().get(stashIdUser, Users.class);
+        String loggedAsForm=String.format("Вошли как %s", user.getLogin());
+        String loggedas = ParametersValidator.replaceCucumberVariables(cucu);
+
+        Assert.assertEquals(loggedas,loggedAsForm);
+
     }
 
     @И("Таблица с пользователями отсортирована по {string} пользователей по {string}")
@@ -167,5 +190,16 @@ public class AssertionSteps {
                     .collect(Collectors.toList());
             Assert.assertNotEquals(listPage, listPageSort);
         }
+    }
+
+    @То("В базе данных появилась в таблице users появилась запись с данными пользователями {string}")
+    public void addBD(String stashId) {
+        String user = (String) Context.getStash().get(stashId);
+        String query = String.format("select * from users inner join email_addresses  on users.id=email_addresses.user_id where login='%s'", user);
+        List<Map<String, Object>> result = Manager.dbConnection.executeQuery(query);
+        Map<String, Object> dbUser = result.get(0);
+        Assert.assertEquals(dbUser.get("login"), user);
+
+
     }
 }

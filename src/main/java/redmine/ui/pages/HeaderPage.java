@@ -23,7 +23,7 @@ public class HeaderPage extends AbstractPage {
 
     @CucumberName("Вошли как")
     @FindBy(xpath = "//div[@id=\"loggedas\"]") //Вошли как
-    public WebElement loggedasElement;
+    public static WebElement loggedasElement;
 
     @CucumberName("Моя страница")
     @FindBy(xpath = "//a[@class=\"my-page\"]") //моя страница
@@ -59,7 +59,7 @@ public class HeaderPage extends AbstractPage {
 
 
 
-    public String loggedAs() {
+    public static String loggedAs() {
         return loggedasElement.getText();
     }
 

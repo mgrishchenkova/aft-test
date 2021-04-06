@@ -37,4 +37,14 @@ public class AdministrationPage extends AbstractPage {
     @FindBy(xpath = "//a[text()='Фамилия']")
     public WebElement lastNameElement;
 
+    @CucumberName("Страница Администрирование")
+    @FindBy(xpath = "//h2")
+    public WebElement adminPage;
+
+    @CucumberName("Новый пользователь")
+    @FindBy(xpath = "//a[@class=\"icon icon-add\"]")
+    public WebElement newUser;
+
+
+
 }

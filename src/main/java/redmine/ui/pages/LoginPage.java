@@ -9,7 +9,7 @@ import redmine.Manager.Manager;
  * страница входа REDMINE
  */
 @CucumberName("Вход в Redmine")
-public class LoginPage extends AbstractPage{
+public class LoginPage extends AbstractPage {
 
 
 

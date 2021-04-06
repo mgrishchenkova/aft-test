@@ -54,9 +54,9 @@ public class ApiStep {
 
     }
 
-    @То("Статус код {string} {int}")
-    public void statusCodeResponse(String stashIdRs, int statusCode) {
-        Response response = Context.getStash().get(stashIdRs, Response.class);
+    @То("Статус код ответа {int}")
+    public void statusCodeResponse(int statusCode) {
+        Response response = Context.getStash().get("last_response", Response.class);
         UserDTO userDTO = response.getBody(UserDTO.class);
         Assert.assertEquals(response.getStatusCode(), statusCode);
 
@@ -102,11 +102,4 @@ public class ApiStep {
 
     }
 
-    @И("Содержится ошибка Пользователь уже существует")
-    public void errorsRole(String stashIdRs) {
-        Response rs = Context.getStash().get(stashIdRs, Response.class);
-        UserCreatingError error = getGson().fromJson(rs.getBody().toString(), UserCreatingError.class);
-
-        Assert.assertEquals(error.getErrors().get(1), "Пользователь уже существует");
-    }
 }

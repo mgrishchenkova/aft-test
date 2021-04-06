@@ -12,7 +12,7 @@ public class LoginSteps {
 
     @И("Открыт браузер на главной странице")
     public void openPage() {
-        Manager.openPage("login");
+        Manager.openPage("");
     }
 
     @И("Авторизоваться пользователем {string}")

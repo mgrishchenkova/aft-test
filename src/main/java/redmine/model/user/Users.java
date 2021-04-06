@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.Accessors;
 import redmine.dataBase.UserRequest;
 import redmine.model.Generatable;
+import redmine.ui.pages.CucumberName;
 import redmine.util.StringGenerator;
 
 import java.sql.Timestamp;
@@ -20,6 +21,7 @@ import static org.apache.commons.codec.digest.DigestUtils.sha1Hex;
 public class Users implements Generatable<Users> {
 
     private Integer id;
+    @CucumberName("логин")
     private String login=StringGenerator.stringRandom(8,StringGenerator.ENGLISH);
     private String firstname=StringGenerator.stringRandom(12,StringGenerator.ENGLISH);;
     private String lastname=StringGenerator.stringRandom(12,StringGenerator.ENGLISH);;
