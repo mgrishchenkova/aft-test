@@ -7,24 +7,46 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import redmine.dataBase.RoleRequests;
 import redmine.model.Generatable;
+import redmine.ui.pages.CucumberName;
+import redmine.util.StringGenerator;
 
-import java.util.Set;
+import java.util.HashSet;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
 @Accessors(chain = true)
 public class Role implements Generatable<Role> {
-    private String name="alfkcsdv";
+    @CucumberName("Наименование")
+    private String name= StringGenerator.stringRandom(16,StringGenerator.ENGLISH);
+
     private Integer id;
+
+
+    @CucumberName("Задача может быть назначена этой роли")
     private Boolean assignable=false;
+
+    @CucumberName("Позиция")
     private Integer position=1;
+
+    @CucumberName("Видимость задач")
     private IssuesVisibility issuesVisibility=IssuesVisibility.ALL;
+
+    @CucumberName("Видимость пользователей")
     private UsersVisibility usersVisibility=UsersVisibility.MEMBERS_OF_VISIBLE_PROJECT;
-    private Set<RolePermission> rolePermissionSet;
+
+    @CucumberName("Права")
+    private RolePermissions rolePermissionSet=new RolePermissions(new HashSet<>());;
+
+    @CucumberName("Видимость трудозатрат")
     private TimeEntriesVisibility timeEntriesVisibility=TimeEntriesVisibility.ALL;
+
     private Boolean allRolesManaged=true;
+
+    @CucumberName("Встроенная")
     private int builtin;
+
     private String settings="--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess\n" +
             "permissions_all_trackers: !ruby/hash:ActiveSupport::HashWithIndifferentAccess\n" +
             "  view_issues: '1'\n" +

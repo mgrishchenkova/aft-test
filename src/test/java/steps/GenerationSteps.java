@@ -3,12 +3,16 @@ package steps;
 import cucumber.api.java.ru.И;
 import cucumber.api.java.ru.Пусть;
 import redmine.Manager.Context;
+import redmine.cucumber.ParametersValidator;
 import redmine.dataBase.ProjectRequest;
 import redmine.model.project.Project;
-import redmine.model.rolee.Role;
+import redmine.model.rolee.*;
 import redmine.model.user.Users;
 
 import java.util.Map;
+
+import static java.lang.Boolean.parseBoolean;
+import static java.lang.Integer.parseInt;
 
 public class GenerationSteps {
 
@@ -42,9 +46,39 @@ public class GenerationSteps {
     }
 
     @Пусть("В системе заведена роль {string} с параметрами:")
-    public void createAndSaveRoleParam(String stashId) {
+    public void createAndSaveRoleParam(String stashId, Map<String, String> parameters) {
+        ParametersValidator.validateRoleParameters(parameters);
         Role role = new Role();
-        Context.getStash().put(stashId, role);
+        if (parameters.containsKey("Позиция")) {
+            role.setPosition(parseInt(parameters.get("Позиция")));
+        }
+        if (parameters.containsKey("Встроенная")) {
+            role.setBuiltin(parseInt(parameters.get("Встроенная")));
+        }
+        if (parameters.containsKey("Задача может быть назначена этой роли")) {
+            role.setAssignable(parseBoolean(parameters.get("Задача может быть назначена этой роли")));
+        }
+        if (parameters.containsKey("Видимость задач")) {
+            role.setIssuesVisibility(
+                    IssuesVisibility.of(parameters.get("Видимость задач"))
+            );
+        }
+        if (parameters.containsKey("Видимость пользователей")) {
+            role.setUsersVisibility(
+                    UsersVisibility.of(parameters.get("Видимость пользователей"))
+            );
+        }
+        if (parameters.containsKey("Видимость трудозатрат")) {
+            role.setTimeEntriesVisibility(
+                    TimeEntriesVisibility.of(parameters.get("Видимость трудозатрат"))
+            );
+        }
+        if (parameters.containsKey("Права")) {
+            RolePermissions permissions = Context.get(parameters.get("Права"), RolePermissions.class);
+            role.setRolePermissionSet(permissions);
+        }
+        role.generate();
+        Context.put(stashId, role);
     }
 
 

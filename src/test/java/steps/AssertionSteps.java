@@ -2,7 +2,6 @@ package steps;
 
 import cucumber.api.java.bg.И;
 import cucumber.api.java.ru.То;
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -18,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static redmine.Manager.Manager.driver;
 import static redmine.ui.pages.Pages.getPage;
 
 public class AssertionSteps {
@@ -48,11 +46,16 @@ public class AssertionSteps {
         switch (pageName) {
             case "Проекты":
                 Assert.assertTrue(BrowseUtils.isElementCurrentlyPresent(getPage(ProjectsPage.class).projects));
+                break;
             case "Домашняя страница":
                 Assert.assertTrue(BrowseUtils.isElementCurrentlyPresent(getPage(HeaderPage.class).homePage));
+                break;
             case "Администрирование":
                 Assert.assertTrue(BrowseUtils.isElementCurrentlyPresent(getPage(AdministrationPage.class).adminPage));
-
+                break;
+            case "Пользователи >> Новый пользователь":
+                Assert.assertTrue(BrowseUtils.isElementCurrentlyPresent(getPage(UserPage.class).newUser));
+                break;
         }
     }
 
@@ -60,7 +63,9 @@ public class AssertionSteps {
     @То("Отображается проект {string}")
     public void isProjectElement(String projectStashId) {
         Project project = Context.getStash().get(projectStashId, Project.class);
-        Assert.assertEquals(driver().findElement(By.xpath(String.format("//a[text()='%s']", project.getName()))).getText(), project.getName());
+        Assert.assertTrue(BrowseUtils.isElementCurrentlyPresent(getPage(ProjectsPage.class).projectName(project.getName())));
+
+        //Assert.assertTrue(driver().findElement(By.xpath(String.format("//a[text()='%s']", project.getName()))).getText());
     }
 
     @И("Не отображается проект {string}")
@@ -93,10 +98,10 @@ public class AssertionSteps {
     @И("На главной странице пользователя {string} элемент Вошли как имеет текст {string}")
     public void assertFieldLoggedAS(String stashIdUser, String cucu) {
         Users user = Context.getStash().get(stashIdUser, Users.class);
-        String loggedAsForm=String.format("Вошли как %s", user.getLogin());
+        String loggedAsForm = String.format("Вошли как %s", user.getLogin());
         String loggedas = ParametersValidator.replaceCucumberVariables(cucu);
 
-        Assert.assertEquals(loggedas,loggedAsForm);
+        Assert.assertEquals(loggedas, loggedAsForm);
 
     }
 

@@ -11,6 +11,10 @@ public class UserPage extends AbstractPage {
     @FindBy(xpath = "//input[@name=\"user[login]\"]")
     public WebElement users;
 
+    @CucumberName("Пользователи >> Новый пользователь")
+    @FindBy(xpath = "//h2")
+    public WebElement newUser;
+
     @CucumberName("Имя")
     @FindBy(xpath = "//input[@name=\"user[firstname]\"]")
     public WebElement firstName;

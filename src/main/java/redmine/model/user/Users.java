@@ -26,7 +26,7 @@ public class Users implements Generatable<Users> {
     private String firstname=StringGenerator.stringRandom(12,StringGenerator.ENGLISH);;
     private String lastname=StringGenerator.stringRandom(12,StringGenerator.ENGLISH);;
     private Boolean admin=false;
-    private Integer status;
+    private Integer status=1;
     private String mail=StringGenerator.email();
     private String password=StringGenerator.stringRandom(7,StringGenerator.ENGLISH);
     private String salt= StringGenerator.stringRandom(31,"0123456789abcdef");

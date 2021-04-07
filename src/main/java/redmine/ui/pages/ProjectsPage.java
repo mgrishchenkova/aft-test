@@ -9,6 +9,7 @@ import java.util.List;
 
 @CucumberName("Проекты")
 public class ProjectsPage extends AbstractPage {
+
     @CucumberName("Проекты")
     @FindBy(xpath = "//h2[text()='Проекты']")
     public WebElement projects;

@@ -41,7 +41,7 @@ public class RoleRequests {
                 role.getPosition(),
                 role.getAssignable(),
                 role.getBuiltin(),
-                role.getRolePermissionSet().toString(),
+                role.getRolePermissionSet(),
                 role.getIssuesVisibility().toString(),
                 role.getUsersVisibility().toString(),
                 role.getTimeEntriesVisibility().toString(),
