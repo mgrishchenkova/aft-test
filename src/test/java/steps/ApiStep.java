@@ -140,7 +140,7 @@ public class ApiStep {
     }
 
     @И("В ответе отсутствуют поля с параметрами admin и api_key")
-    public void resultGetUser() {
+    public void resultGetUsers() {
         Response response = Context.getStash().get("last_response", Response.class);
         UserDTO userDTO = response.getBody(UserDTO.class);
         Assert.assertNull(userDTO.getUser().getApi_key());

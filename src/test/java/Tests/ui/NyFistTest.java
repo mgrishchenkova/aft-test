@@ -5,7 +5,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import redmine.Manager.Manager;
 import redmine.model.user.User;
-import redmine.ui.page.HeaderPage;
 import redmine.ui.page.LoginPage;
 
 public class NyFistTest {
@@ -37,7 +36,7 @@ public class NyFistTest {
     public void myFirstTest() {
 
         new LoginPage().login(user.getLogin(), user.getPassword());
-        System.out.println(new HeaderPage().loggedAs());
+       // System.out.println(new HeaderPage().loggedAs());
         //Assert.assertEquals(new HeaderPage().loggedAs(), "Вошли как " + user.getLogin());
 
     }

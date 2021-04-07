@@ -28,7 +28,7 @@ public class Role implements Generatable<Role> {
     private IssuesVisibility issuesVisibility = IssuesVisibility.ALL;
 
     @CucumberName("Видимость пользователей")
-    private UserVisibility UserVisibility = UserVisibility.MEMBERS_OF_VISIBLE_PROJECT;
+    private UserVisibility UserVisibility = redmine.model.role.UserVisibility.ALL;
 
     @CucumberName("Права")
     private RolePermissions rolePermissionSet = new RolePermissions(new HashSet<>());
