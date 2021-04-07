@@ -4,10 +4,10 @@ import cucumber.api.java.ru.И;
 import cucumber.api.java.ru.Пусть;
 import redmine.Manager.Context;
 import redmine.cucumber.ParametersValidator;
-import redmine.dataBase.ProjectRequest;
+import redmine.db.ProjectRequest;
 import redmine.model.project.Project;
-import redmine.model.rolee.*;
-import redmine.model.user.Users;
+import redmine.model.role.*;
+import redmine.model.user.User;
 
 import java.util.Map;
 
@@ -18,7 +18,7 @@ public class GenerationSteps {
 
     @Пусть("В системе заведен пользователь {string} с параметрами:")
     public void createAndSaveUser(String stashId, Map<String, String> params) {
-        Users user = new Users();
+        User user = new User();
         if (params.containsKey("admin")) {
             user.setAdmin(Boolean.parseBoolean(params.get("admin")));
         }
@@ -64,8 +64,8 @@ public class GenerationSteps {
             );
         }
         if (parameters.containsKey("Видимость пользователей")) {
-            role.setUsersVisibility(
-                    UsersVisibility.of(parameters.get("Видимость пользователей"))
+            role.setUserVisibility(
+                    UserVisibility.of(parameters.get("Видимость пользователей"))
             );
         }
         if (parameters.containsKey("Видимость трудозатрат")) {
@@ -84,7 +84,7 @@ public class GenerationSteps {
 
     @И("У пользователя {string} есть доступ к проекту {string} c ролью {string}")
     public void createProjectUserRole(String stashIdUser, String stashIdProject, String stashIdRole) {
-        Users user = Context.getStash().get(stashIdUser, Users.class);
+        User user = Context.getStash().get(stashIdUser, User.class);
         Project project = Context.getStash().get(stashIdProject, Project.class);
         Role role = Context.getStash().get(stashIdRole, Role.class);
         Project updateProject = ProjectRequest.addUserAndRoleToProject(project, user, role);

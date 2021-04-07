@@ -6,7 +6,7 @@ import io.restassured.specification.RequestSpecification;
 import redmine.api.interfaces.ApiClient;
 import redmine.api.interfaces.Request;
 import redmine.api.interfaces.Response;
-import redmine.model.user.Users;
+import redmine.model.user.User;
 
 import java.util.Map;
 import java.util.Objects;
@@ -17,7 +17,7 @@ public class RestApiClient implements ApiClient {
     private String token;
 
 
-    public RestApiClient(Users user) {
+    public RestApiClient(User user) {
         Objects.requireNonNull(user, "Пользователь должен быть инициализирован");
         Objects.requireNonNull(user.getApi_key(), "У пользователя должен быть создан ключ API");
         token = user.getApi_key();

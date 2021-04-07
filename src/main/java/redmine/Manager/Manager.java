@@ -8,7 +8,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import redmine.Property;
-import redmine.dataBase.ConnectionDB;
+import redmine.db.ConnectionDB;
 
 import java.net.URL;
 import java.util.Map;

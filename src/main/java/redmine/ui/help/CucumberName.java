@@ -1,4 +1,4 @@
-package redmine.ui.pages;
+package redmine.ui.help;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

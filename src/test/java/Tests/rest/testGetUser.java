@@ -9,29 +9,29 @@ import redmine.api.interfaces.ApiClient;
 import redmine.api.interfaces.Methods;
 import redmine.api.interfaces.Request;
 import redmine.api.interfaces.Response;
-import redmine.model.dto.RoleDto;
-import redmine.model.user.Users;
+import redmine.model.dto.RoleDTO;
+import redmine.model.user.User;
 
 public class testGetUser {
-    private Users user;
+    private User user;
     private ApiClient apiClient;
 
     @BeforeMethod
     public void prepareFixtures() {
-        user = new Users().generate();
+        user = new User().generate();
 
         apiClient = new RestApiClient(user);
     }
 
     @Test
-    public void getUsers() {
-        String uri = String.format("users/%d.json", user.getId());
+    public void getUser() {
+        String uri = String.format("User/%d.json", user.getId());
         Request request = new RestRequest(uri, Methods.GET, null, null, null);
         Response response = apiClient.request(request);
 
         Assert.assertEquals(response.getStatusCode(), 200);
 
-        RoleDto roleDto = response.getBody(RoleDto.class);
+        RoleDTO roleDto = response.getBody(RoleDTO.class);
 
 
     }

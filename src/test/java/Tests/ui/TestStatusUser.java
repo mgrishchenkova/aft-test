@@ -3,20 +3,20 @@ package Tests.ui;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import redmine.Manager.Manager;
-import redmine.model.user.Users;
-import redmine.ui.pages.HeaderPage;
-import redmine.ui.pages.LoginPage;
-import redmine.ui.pages.Pages;
+import redmine.model.user.User;
+import redmine.ui.page.HeaderPage;
+import redmine.ui.page.LoginPage;
+import redmine.ui.page.Page;
 import redmine.util.BrowseUtils;
 
-import static redmine.ui.pages.Pages.getPage;
+import static redmine.ui.page.Page.getPage;
 
 public class TestStatusUser {
     @Test
     public void testErrors(){
-        Users user = new Users().setStatus(1).setAdmin(true).generate();
+        User user = new User().setStatus(1).setAdmin(true).generate();
         Manager.openPage("login");
-        Pages.getPage(LoginPage.class).login(user.getLogin(), user.getPassword());
+        Page.getPage(LoginPage.class).login(user.getLogin(), user.getPassword());
         Assert.assertTrue(BrowseUtils.isElementCurrentlyPresent(getPage(HeaderPage.class).homePage));
 
     }

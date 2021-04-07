@@ -1,7 +1,7 @@
-package redmine.dataBase;
+package redmine.db;
 
 import redmine.Manager.Manager;
-import redmine.model.rolee.*;
+import redmine.model.role.*;
 
 import java.util.List;
 import java.util.Map;
@@ -33,9 +33,9 @@ public class RoleRequests {
     }
 
     public static Role addRole(Role role) {
-        String query = "INSERT INTO public.roles\n" +
-                "(id, \"name\", \"position\", assignable, builtin, permissions, issues_visibility, users_visibility, time_entries_visibility, all_roles_managed, settings)\n" +
-                "VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id;\n";
+        String query = "insert into public.roles\n" +
+                "(id, \"name\", \"position\", assignable, builtin, permissions, issues_visibility, User_visibility, time_entries_visibility, all_roles_managed, settings)\n" +
+                "values(default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning id;\n";
         List<Map<String, Object>> result = Manager.dbConnection.executePreparedQuery(query,
                 role.getName(),
                 role.getPosition(),
@@ -43,7 +43,7 @@ public class RoleRequests {
                 role.getBuiltin(),
                 role.getRolePermissionSet(),
                 role.getIssuesVisibility().toString(),
-                role.getUsersVisibility().toString(),
+                role.getUserVisibility().toString(),
                 role.getTimeEntriesVisibility().toString(),
                 role.getAllRolesManaged(),
                 role.getSettings()
@@ -54,17 +54,17 @@ public class RoleRequests {
     }
 
     public static Role updateRole(Role role) {
-        String query = "UPDATE public.roles\n" +
-                "SET \"position\"=?, assignable=?, builtin=?, " +
-                "permissions=?, issues_visibility=?, users_visibility=?, time_entries_visibility=?, all_roles_managed=?, settings=?\n" +
-                "WHERE name=? RETURNING id;\n";
+        String query = "update public.roles\n" +
+                "set \"position\"=?, assignable=?, builtin=?, " +
+                "permissions=?, issues_visibility=?, User_visibility=?, time_entries_visibility=?, all_roles_managed=?, settings=?\n" +
+                "where name=? returning id;\n";
         List<Map<String, Object>> result = Manager.dbConnection.executePreparedQuery(query,
                 role.getPosition(),
                 role.getAssignable(),
                 role.getBuiltin(),
                 role.getRolePermissionSet().toString(),
                 role.getIssuesVisibility().toString(),
-                role.getUsersVisibility().toString(),
+                role.getUserVisibility().toString(),
                 role.getTimeEntriesVisibility().toString(),
                 role.getAllRolesManaged(),
                 role.getSettings(),
@@ -75,10 +75,7 @@ public class RoleRequests {
 
     }
 
-    //TODO следует разнести на отдельные запросы
-    //TODO SELECT * FROM ROLES WHERE id = ?
-    //TODO SELECT * FROM ROLES WHERE name = ?
-    //TODO на занятии это разбирали, см. пример.
+
     public static Role getRole(Role objectRole) {
         return getAllRoles().stream()
                 .filter(role -> {

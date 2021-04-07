@@ -9,15 +9,16 @@ import redmine.Manager.Context;
 import redmine.Manager.Manager;
 import redmine.cucumber.ParametersValidator;
 import redmine.model.project.Project;
-import redmine.model.user.Users;
-import redmine.ui.pages.*;
+import redmine.model.user.User;
+import redmine.ui.page.*;
+import redmine.ui.help.CucumberPageObjectHelper;
 import redmine.util.BrowseUtils;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static redmine.ui.pages.Pages.getPage;
+import static redmine.ui.page.Page.getPage;
 
 public class AssertionSteps {
 
@@ -89,7 +90,7 @@ public class AssertionSteps {
 
     @И("На странице \"Пользователи\" отображается элемент Пользователь {string} создан.")
     public void assertFieldUserLogin(String stashId) {
-        Users user = (Users) Context.getStash().get(stashId);
+        User user = (User) Context.getStash().get(stashId);
         String element = String.format("Пользователь %s создан.", user.getLogin());
         String elementForm = UserPage.createUserText();
         Assert.assertEquals(element, elementForm);
@@ -97,7 +98,7 @@ public class AssertionSteps {
 
     @И("На главной странице пользователя {string} элемент Вошли как имеет текст {string}")
     public void assertFieldLoggedAS(String stashIdUser, String cucu) {
-        Users user = Context.getStash().get(stashIdUser, Users.class);
+        User user = Context.getStash().get(stashIdUser, User.class);
         String loggedAsForm = String.format("Вошли как %s", user.getLogin());
         String loggedas = ParametersValidator.replaceCucumberVariables(cucu);
 
@@ -106,26 +107,26 @@ public class AssertionSteps {
     }
 
     @И("Таблица с пользователями отсортирована по {string} пользователей по {string}")
-    public void sortUsers(String sortName, String typeSort) {
+    public void sortUser(String sortName, String typeSort) {
         if (sortName == "логину" && typeSort == "возрастанию") {
             List<String> listPage = getPage(AdministrationPage.class).userName
                     .stream()
                     .map(WebElement::getText)
                     .collect(Collectors.toList());
-            List<String> listPageSort = listPage.stream()
+            List<String> listPageort = listPage.stream()
                     .sorted(String::compareToIgnoreCase)
                     .collect(Collectors.toList());
-            Assert.assertEquals(listPage, listPageSort);
+            Assert.assertEquals(listPage, listPageort);
         }
         if (sortName == "логину" && typeSort == "убыванию") {
             List<String> listPage = getPage(AdministrationPage.class).userName
                     .stream()
                     .map(WebElement::getText)
                     .collect(Collectors.toList());
-            List<String> listPageSort = listPage.stream()
+            List<String> listPageort = listPage.stream()
                     .sorted(String.CASE_INSENSITIVE_ORDER.reversed())
                     .collect(Collectors.toList());
-            Assert.assertEquals(listPage, listPageSort);
+            Assert.assertEquals(listPage, listPageort);
         }
         if (sortName == "имени" && typeSort == "возрастанию") {
             List<String> listPage = getPage(AdministrationPage.class).firstName
@@ -133,10 +134,10 @@ public class AssertionSteps {
                     .map(WebElement::getText)
                     .sorted(String::compareToIgnoreCase)
                     .collect(Collectors.toList());
-            List<String> listPageSort = listPage.stream()
+            List<String> listPageort = listPage.stream()
                     .sorted(String::compareToIgnoreCase)
                     .collect(Collectors.toList());
-            Assert.assertEquals(listPage, listPageSort);
+            Assert.assertEquals(listPage, listPageort);
         }
         if (sortName == "имени" && typeSort == "убыванию") {
             List<String> listPage = getPage(AdministrationPage.class).firstName
@@ -144,30 +145,30 @@ public class AssertionSteps {
                     .map(WebElement::getText)
                     .sorted(String.CASE_INSENSITIVE_ORDER.reversed())
                     .collect(Collectors.toList());
-            List<String> listPageSort = listPage.stream()
+            List<String> listPageort = listPage.stream()
                     .sorted(String.CASE_INSENSITIVE_ORDER.reversed())
                     .collect(Collectors.toList());
-            Assert.assertEquals(listPage, listPageSort);
+            Assert.assertEquals(listPage, listPageort);
         }
         if (sortName == "фамилии" && typeSort == "возрастанию") {
             List<String> listPage = getPage(AdministrationPage.class).lastName
                     .stream()
                     .map(WebElement::getText)
                     .collect(Collectors.toList());
-            List<String> listPageSort = listPage.stream()
+            List<String> listPageort = listPage.stream()
                     .sorted(String::compareToIgnoreCase)
                     .collect(Collectors.toList());
-            Assert.assertEquals(listPage, listPageSort);
+            Assert.assertEquals(listPage, listPageort);
         }
         if (sortName == "фамилии" && typeSort == "убыванию") {
             List<String> listPage = getPage(AdministrationPage.class).lastName
                     .stream()
                     .map(WebElement::getText)
                     .collect(Collectors.toList());
-            List<String> listPageSort = listPage.stream()
+            List<String> listPageort = listPage.stream()
                     .sorted(String.CASE_INSENSITIVE_ORDER.reversed())
                     .collect(Collectors.toList());
-            Assert.assertEquals(listPage, listPageSort);
+            Assert.assertEquals(listPage, listPageort);
         }
 
 
@@ -180,27 +181,27 @@ public class AssertionSteps {
                     .stream()
                     .map(WebElement::getText)
                     .collect(Collectors.toList());
-            List<String> listPageSort = listPage.stream()
+            List<String> listPageort = listPage.stream()
                     .sorted(String::compareToIgnoreCase)
                     .collect(Collectors.toList());
-            Assert.assertNotEquals(listPage, listPageSort);
+            Assert.assertNotEquals(listPage, listPageort);
         }
         if (nameElement == "имени") {
             List<String> listPage = getPage(AdministrationPage.class).firstName
                     .stream()
                     .map(WebElement::getText)
                     .collect(Collectors.toList());
-            List<String> listPageSort = listPage.stream()
+            List<String> listPageort = listPage.stream()
                     .sorted(String.CASE_INSENSITIVE_ORDER.reversed())
                     .collect(Collectors.toList());
-            Assert.assertNotEquals(listPage, listPageSort);
+            Assert.assertNotEquals(listPage, listPageort);
         }
     }
 
-    @То("В базе данных появилась в таблице users появилась запись с данными пользователями {string}")
+    @То("В базе данных появилась в таблице User появилась запись с данными пользователями {string}")
     public void addBD(String stashId) {
         String user = (String) Context.getStash().get(stashId);
-        String query = String.format("select * from users inner join email_addresses  on users.id=email_addresses.user_id where login='%s'", user);
+        String query = String.format("select * from User inner join randomEmail_addresses  on User.id=randomEmail_addresses.user_id where login='%s'", user);
         List<Map<String, Object>> result = Manager.dbConnection.executeQuery(query);
         Map<String, Object> dbUser = result.get(0);
         Assert.assertEquals(dbUser.get("login"), user);

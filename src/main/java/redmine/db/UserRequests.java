@@ -1,21 +1,21 @@
-package redmine.dataBase;
+package redmine.db;
 
 import redmine.Manager.Manager;
-import redmine.model.user.Users;
+import redmine.model.user.User;
 
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class UserRequest {
+public class UserRequests {
 
-    public static List<Users> getAllUsers(){
-        String query="select *from users;";
+    public static List<User> getAllUser(){
+        String query="select *from User;";
         List<Map<String, Object>> result = Manager.dbConnection.executeQuery(query);
         return result.stream()
                 .map(map -> {
-                    Users user = new Users();
+                    User user = new User();
                     user.setId((Integer)map.get("id")); user.setLogin("");
                     user.setLogin((String) map.get("login"));
                     user.setFirstname((String) map.get("firstname"));
@@ -37,8 +37,8 @@ public class UserRequest {
                     return user;
                 }).collect(Collectors.toList());
     }
-    public static Users getUser(Users objectUser) {
-        return getAllUsers().stream()
+    public static User getUser(User objectUser) {
+        return getAllUser().stream()
                 .filter(user -> {
                     if (objectUser.getId() == null) {
                         return objectUser.getLogin().equals(user.getLogin());
@@ -50,8 +50,8 @@ public class UserRequest {
                 .orElse(null);
     }
 
-    public static Users updateUser(Users user){
-        String query="UPDATE public.users\n" +
+    public static User updateUser(User user){
+        String query="UPDATE public.User\n" +
                 "SET hashed_password=?, firstname=?, lastname=?, \"admin\"=?, status=?, last_login_on=?, \"language\"=?, auth_source_id=?, created_on=?, updated_on=?, \"type\"=?, identity_url=?, mail_notification=?, salt=?, must_change_passwd=?, passwd_changed_on=?\n" +
                 "WHERE login=? RETURNING id;\n";
         List<Map<String,Object>> result = Manager.dbConnection.executePreparedQuery(query,
@@ -80,8 +80,8 @@ public class UserRequest {
 
     }
 
-    public static Users addUser(Users user){
-        String query="INSERT INTO public.users\n" +
+    public static User addUser(User user){
+        String query="INSERT INTO public.User\n" +
                 "(id, login, hashed_password, firstname, lastname, \"admin\", status, last_login_on, \"language\", auth_source_id, created_on, updated_on, \"type\", identity_url, mail_notification, salt, must_change_passwd, passwd_changed_on)\n" +
                 "VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id;\n";
         List<Map<String,Object>> result = Manager.dbConnection.executePreparedQuery(query,

@@ -1,8 +1,10 @@
-package redmine.ui.pages;
+package redmine.ui.help;
 
 import lombok.SneakyThrows;
 import org.openqa.selenium.WebElement;
 import org.reflections.Reflections;
+import redmine.ui.page.AbstractPage;
+import redmine.ui.page.Page;
 
 import java.lang.reflect.Field;
 import java.util.Set;
@@ -24,7 +26,7 @@ public class CucumberPageObjectHelper {
 
     @SneakyThrows
     public static AbstractPage getPageBy(String cucumberPageName){
-        Reflections reflections = new Reflections("redmine.ui.pages");
+        Reflections reflections = new Reflections("redmine.ui.Page");
         Set<Class<?>> allClasses = reflections.getTypesAnnotatedWith(CucumberName.class);
         Class<?> pageClass = allClasses.stream()
                 .filter(clazz -> cucumberPageName.equals(clazz.getAnnotation(CucumberName.class).value()))
@@ -32,7 +34,7 @@ public class CucumberPageObjectHelper {
                 .orElseThrow(() -> new IllegalStateException(
                         String.format("Нет аннотации @CucumberName(\"%s\") у класса", cucumberPageName)
                 ));
-        return Pages.getPage((Class<AbstractPage>) pageClass);
+        return Page.getPage((Class<AbstractPage>) pageClass);
     }
 
 

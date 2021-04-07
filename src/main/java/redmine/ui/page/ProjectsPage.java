@@ -1,9 +1,10 @@
-package redmine.ui.pages;
+package redmine.ui.page;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import redmine.Manager.Manager;
+import redmine.ui.help.CucumberName;
 
 import java.util.List;
 

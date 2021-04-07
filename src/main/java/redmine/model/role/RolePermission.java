@@ -1,4 +1,4 @@
-package redmine.model.rolee;
+package redmine.model.role;
 
 import lombok.AllArgsConstructor;
 
@@ -62,16 +62,16 @@ public enum RolePermission {
     EDIT_TIME_ENTRIES("Редактирование учёта времени"),
     EDIT_OWN_TIME_ENTRIES("Редактирование собственного учёта времени"),
     MANAGE_PROJECT_ACTIVITIES("Управление типами действий для проекта"),
-    LOG_TIME_FOR_OTHER_USERS("Учитывать время других пользователей"),
+    LOG_TIME_FOR_OTHER_User("Учитывать время других пользователей"),
     IMPORT_TIME_ENTRIES("Импорт трудозатрат"),
-    VIEW_WIKI_PAGES("Просмотр Wiki"),
+    VIEW_WIKI_Page("Просмотр Wiki"),
     VIEW_WIKI_EDITS("Просмотр истории Wiki"),
-    EXPORT_WIKI_PAGES("Экспорт wiki-страниц"),
-    EDIT_WIKI_PAGES("Редактирование wiki-страниц"),
-    RENAME_WIKI_PAGES("Переименование wiki-страниц"),
-    DELETE_WIKI_PAGES("Удаление wiki-страниц"),
-    DELETE_WIKI_PAGES_ATTACHMENTS("Удаление прикреплённых файлов"),
-    PROTECT_WIKI_PAGES("Блокирование wiki-страниц"),
+    EXPORT_WIKI_Page("Экспорт wiki-страниц"),
+    EDIT_WIKI_Page("Редактирование wiki-страниц"),
+    RENAME_WIKI_Page("Переименование wiki-страниц"),
+    DELETE_WIKI_Page("Удаление wiki-страниц"),
+    DELETE_WIKI_Page_ATTACHMENTS("Удаление прикреплённых файлов"),
+    PROTECT_WIKI_Page("Блокирование wiki-страниц"),
     MANAGE_WIKI("Управление Wiki");
 
     public  final String description;

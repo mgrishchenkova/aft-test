@@ -3,7 +3,7 @@ package redmine.cucumber;
 import lombok.SneakyThrows;
 import org.testng.Assert;
 import redmine.Manager.Context;
-import redmine.ui.pages.CucumberName;
+import redmine.ui.help.CucumberName;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;

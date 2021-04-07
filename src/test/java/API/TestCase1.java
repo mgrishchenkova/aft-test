@@ -9,17 +9,17 @@ import redmine.api.implementations.RestRequest;
 import redmine.api.interfaces.ApiClient;
 import redmine.api.interfaces.Methods;
 import redmine.api.interfaces.Response;
-import redmine.dataBase.UserRequest;
+import redmine.db.UserRequests;
 import redmine.model.dto.UserCreatingError;
 import redmine.model.dto.UserDTO;
 import redmine.model.dto.UserInfo;
-import redmine.model.user.Users;
+import redmine.model.user.User;
 import redmine.util.StringGenerator;
 
 import static redmine.util.GsonHelper.getGson;
 
 public class TestCase1 {
-    private Users user;
+    private User user;
     private ApiClient apiClient;
 
 
@@ -27,7 +27,7 @@ public class TestCase1 {
     //@Description("Заведение пользователя в системе с правами админа и ключем API_KEY")
     public void testPrerequisite() {
 
-        user = new Users().setAdmin(true).generate();
+        user = new User().setAdmin(true).generate();
         apiClient = new RestApiClient(user);
 
         //TODO ВЫНЕСТИ В МЕТОД!!!
@@ -37,10 +37,10 @@ public class TestCase1 {
 
         Manager.dbConnection.executePreparedQuery(addToken,
                 user.getId(), "api", user.getApi_key(), user.getCreated_on(), user.getUpdated_on());
-        String emailAdd = "INSERT INTO public.email_addresses\n" +
+        String randomEmailAdd = "INSERT INTO public.randomEmail_addresses\n" +
                 "(id, user_id, address, is_default, \"notify\", created_on, updated_on)\n" +
                 "VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)RETURNING id;;\n";
-        Manager.dbConnection.executePreparedQuery(emailAdd,
+        Manager.dbConnection.executePreparedQuery(randomEmailAdd,
                 user.getId(), user.getMail(), true, true, user.getCreated_on(), user.getUpdated_on());
 
     }
@@ -48,7 +48,7 @@ public class TestCase1 {
     @Test(description = "Создание, изменение, получение, удаление пользователя. Администратор системы")
     public void testPostUser() {
 
-        String password=StringGenerator.stringRandom(7,StringGenerator.ENGLISH);
+        String password=StringGenerator.randomString(7,StringGenerator.ENGLISH);
         UserInfo userInfo = new UserInfo()
                 .setAdmin(false).setPassword(password);
         UserDTO createUser = new UserDTO()
@@ -56,7 +56,7 @@ public class TestCase1 {
         String body = getGson().toJson(createUser);
 
         //1. Отправить запрос POST на создание пользователя
-        Response rs = apiClient.request(new RestRequest("users.json", Methods.POST, null, body, null));
+        Response rs = apiClient.request(new RestRequest("User.json", Methods.POST, null, body, null));
         UserDTO userDTO = rs.getBody(UserDTO.class);
         //Проверки к п.1
         Assert.assertEquals(rs.getStatusCode(), 201);
@@ -70,20 +70,20 @@ public class TestCase1 {
         System.out.println("Завершен 1ый тест");
 
         //Отправить запрос POST на создание пользователя повторно с тем же телом запроса
-        Response rsDubl = apiClient.request(new RestRequest("users.json", Methods.POST, null, body, null));
+        Response rsDubl = apiClient.request(new RestRequest("User.json", Methods.POST, null, body, null));
         UserCreatingError errors = getGson().fromJson(rsDubl.getBody().toString(), UserCreatingError.class);
         Assert.assertEquals(rsDubl.getStatusCode(), 422);
-        Assert.assertEquals(errors.getErrors().get(0), "Email уже существует");
+        Assert.assertEquals(errors.getErrors().get(0), "randomEmail уже существует");
         Assert.assertEquals(errors.getErrors().get(1), "Пользователь уже существует");
         System.out.println("Завершен 2ой тест");
 
-        //Отправить запрос POST на создание пользователя повторно с тем же телом запроса, при этом изменив "email" на невалидный, а "password" - на строку из 4 символов
+        //Отправить запрос POST на создание пользователя повторно с тем же телом запроса, при этом изменив "randomEmail" на невалидный, а "password" - на строку из 4 символов
         createUser.setUser(userInfo.setMail("hello").setPassword("1wjd"));
         String body1 = getGson().toJson(createUser);
-        Response rs1 = apiClient.request(new RestRequest("users.json", Methods.POST, null, body1, null));
+        Response rs1 = apiClient.request(new RestRequest("User.json", Methods.POST, null, body1, null));
         UserCreatingError errorRs1 = getGson().fromJson(rs1.getBody().toString(), UserCreatingError.class);
         Assert.assertEquals(rs1.getStatusCode(), 422);
-        Assert.assertEquals(errorRs1.getErrors().get(0), "Email имеет неверное значение");
+        Assert.assertEquals(errorRs1.getErrors().get(0), "randomEmail имеет неверное значение");
         Assert.assertEquals(errorRs1.getErrors().get(1), "Пользователь уже существует");
         Assert.assertEquals(errorRs1.getErrors().get(2), "Пароль недостаточной длины (не может быть меньше 8 символа)");
 
@@ -91,11 +91,11 @@ public class TestCase1 {
         String mail = userDTO.getUser().getMail();
         createUser.setUser(userInfo.setStatus(1).setMail(mail).setPassword(password));
         String body2 = getGson().toJson(createUser);
-        String uri = String.format("users/%d.json", userDTO.getUser().getId());
+        String uri = String.format("User/%d.json", userDTO.getUser().getId());
         System.out.println("__________________________________");
         Response responsePut = apiClient.request(new RestRequest(uri, Methods.PUT, null, body2, null));
         Assert.assertEquals(responsePut.getStatusCode(), 204);
-        Users createUserDB = UserRequest.getUser(user);
+        User createUserDB = UserRequests.getUser(user);
         Assert.assertEquals((createUserDB.getStatus().toString()), "1");
 
 
@@ -118,7 +118,7 @@ public class TestCase1 {
         //6. Отправить запрос DELETE на удаление пользователя
         Response deleteUser = apiClient.request(new RestRequest(uri, Methods.DELETE, null, null, null));
         Assert.assertEquals(deleteUser.getStatusCode(), 204);
-        Users removeUser = UserRequest.getUser(user);
+        User removeUser = UserRequests.getUser(user);
         //Assert.assertNull(removeUser);
 
         //7. Отправить запрос DELETE на удаление пользователя (повторно)

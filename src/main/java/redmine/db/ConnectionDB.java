@@ -1,4 +1,4 @@
-package redmine.dataBase;
+package redmine.db;
 
 import lombok.SneakyThrows;
 import redmine.Property;

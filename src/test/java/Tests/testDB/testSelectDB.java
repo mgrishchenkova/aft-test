@@ -1,17 +1,17 @@
 package Tests.testDB;
 
 import org.testng.annotations.Test;
-import redmine.dataBase.RoleRequests;
-import redmine.dataBase.UserRequest;
-import redmine.model.rolee.*;
-import redmine.model.user.Users;
+import redmine.db.RoleRequests;
+import redmine.db.UserRequests;
+import redmine.model.role.*;
+import redmine.model.user.User;
 
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import static redmine.model.rolee.RolePermission.*;
+import static redmine.model.role.RolePermission.*;
 
 public class testSelectDB {
     @Test
@@ -23,7 +23,7 @@ public class testSelectDB {
                 setBuiltin(1).
                 setRolePermissionSet(new RolePermissions(new HashSet<>(Arrays.asList(MANAGE_MEMBERS, MANAGE_VERSIONS)))).
                 setIssuesVisibility(IssuesVisibility.ALL).
-                setUsersVisibility(UsersVisibility.ALL).
+                setUserVisibility(UserVisibility.ALL).
                 setTimeEntriesVisibility(TimeEntriesVisibility.ALL)
                 .setAllRolesManaged(false);
 
@@ -37,7 +37,7 @@ public class testSelectDB {
         Role role = new Role();
         role.setName("testUpdateDB");
         role.setRolePermissionSet(new RolePermissions(new HashSet<>(Arrays.asList(ADD_DOCUMENTS))));
-        role.setUsersVisibility(UsersVisibility.ALL);
+        role.setUserVisibility(UserVisibility.ALL);
         RoleRequests.updateRole(role);
     }
 
@@ -46,7 +46,7 @@ public class testSelectDB {
         Role role = new Role();
         role.setName("Создание новой роли");
         role.setRolePermissionSet(new RolePermissions(new HashSet<>(Arrays.asList(ADD_DOCUMENTS))));
-        role.setUsersVisibility(UsersVisibility.MEMBERS_OF_VISIBLE_PROJECT);
+        role.setUserVisibility(UserVisibility.MEMBERS_OF_VISIBLE_PROJECT);
         role.setIssuesVisibility(IssuesVisibility.DEFAULT);
         role.setTimeEntriesVisibility(TimeEntriesVisibility.ALL);
         role.setAssignable(true);
@@ -54,43 +54,43 @@ public class testSelectDB {
     }
 
     @Test
-    public void testAllUsers(){
-        int count = UserRequest.getAllUsers().size();
+    public void testAllUser(){
+        int count = UserRequests.getAllUser().size();
         System.out.println(count);
     }
 
     @Test
     public void testAddUser() throws ParseException {
         LocalDateTime localDate = LocalDateTime.now();
-        Users user=new Users();
+        User user=new User();
         user.setLogin("testLogin5").setAdmin(false);
-        UserRequest.addUser(user);
+        UserRequests.addUser(user);
     }
     @Test
     public void testUserUpdate() throws ParseException{
         LocalDateTime localDate = LocalDateTime.now();
-        Users users=new Users();
-        users.setLogin("testLogin5").
+        User User=new User();
+        User.setLogin("testLogin5").
 
                 setAdmin(false);
 
                // setLast_login_on(localDate).
                 //setCreated_on(localDate).
                // setUpdated_on(localDate);
-        UserRequest.updateUser(users);
+        UserRequests.updateUser(User);
     }
 
     @Test
     public void testGenerateUser()throws ParseException{
 
-        Users user = new Users();
+        User user = new User();
         user.setLogin("testLogin2").setAdmin(true);
         user.generate();
     }
     @Test
     public void testToken(){
-        Users user = new Users();
+        User user = new User();
         user.generate();
-        UserRequest.addUser(user);
+        UserRequests.addUser(user);
     }
 }

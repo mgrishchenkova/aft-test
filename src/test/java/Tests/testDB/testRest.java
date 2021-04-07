@@ -9,16 +9,16 @@ import redmine.api.interfaces.ApiClient;
 import redmine.api.interfaces.Methods;
 import redmine.api.interfaces.Request;
 import redmine.api.interfaces.Response;
-import redmine.model.user.Users;
+import redmine.model.user.User;
 
 public class testRest {
-    private Users user;
+    private User user;
     private ApiClient apiClient;
 
 
     @BeforeMethod
     public void prepareFixtures() {
-        Users user = new Users().generate();
+        User user = new User().generate();
         apiClient= new RestApiClient(user);
     }
 

@@ -1,9 +1,9 @@
-package redmine.dataBase;
+package redmine.db;
 
 import redmine.Manager.Manager;
 import redmine.model.project.Project;
-import redmine.model.rolee.Role;
-import redmine.model.user.Users;
+import redmine.model.role.Role;
+import redmine.model.user.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -94,7 +94,7 @@ public class ProjectRequest {
                 .orElse(null);
     }
 
-    public static Project addUserAndRoleToProject(Project project, Users user, Role role) {
+    public static Project addUserAndRoleToProject(Project project, User user, Role role) {
         String addUser = "insert into public.members\n" +
                 "(id,user_id,project_id,created_on,mail_notification) values(default,?,?,?,false) RETURNING id;\n";
 

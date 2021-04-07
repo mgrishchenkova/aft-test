@@ -3,7 +3,7 @@ package steps;
 import cucumber.api.java.ru.И;
 import org.openqa.selenium.WebElement;
 import redmine.Manager.Context;
-import redmine.ui.pages.CucumberPageObjectHelper;
+import redmine.ui.help.CucumberPageObjectHelper;
 import redmine.util.StringGenerator;
 
 public class ElementSteps {
@@ -19,17 +19,17 @@ public class ElementSteps {
         element.sendKeys(text);
     }
 
-    @И("Заполнить поля: \"Пользователь\", \"Имя\", \"Фамилия\", \"Email\"  для создания нового пользователя {string}")
+    @И("Заполнить поля: \"Пользователь\", \"Имя\", \"Фамилия\", \"randomEmail\"  для создания нового пользователя {string}")
     public void createNewUser(String stashId) {
         WebElement user = CucumberPageObjectHelper.getElementBy("Пользователи", "Пользователь");
-        String userName=StringGenerator.stringRandom(11, StringGenerator.ENGLISH);
+        String userName=StringGenerator.randomString(11, StringGenerator.ENGLISH);
         user.sendKeys(userName);
         WebElement firstName = CucumberPageObjectHelper.getElementBy("Пользователи", "Имя");
-        firstName.sendKeys("Mary" + StringGenerator.stringRandom(11, StringGenerator.ENGLISH));
+        firstName.sendKeys("Mary" + StringGenerator.randomString(11, StringGenerator.ENGLISH));
         WebElement lastName = CucumberPageObjectHelper.getElementBy("Пользователи", "Фамилия");
-        lastName.sendKeys(StringGenerator.stringRandom(16, StringGenerator.ENGLISH));
-        WebElement email = CucumberPageObjectHelper.getElementBy("Пользователи", "Email");
-        email.sendKeys(StringGenerator.email());
+        lastName.sendKeys(StringGenerator.randomString(16, StringGenerator.ENGLISH));
+        WebElement randomEmail = CucumberPageObjectHelper.getElementBy("Пользователи", "randomEmail");
+        randomEmail.sendKeys(StringGenerator.randomEmail());
         Context.getStash().put(stashId,userName);
 
 

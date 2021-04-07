@@ -1,4 +1,4 @@
-package redmine.model.rolee;
+package redmine.model.role;
 
 import java.util.stream.Stream;
 

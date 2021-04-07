@@ -1,9 +1,8 @@
-package redmine.ui.pages;
+package redmine.ui.page;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import redmine.Manager.Manager;
+import redmine.ui.help.CucumberName;
 
 /**
  * страница входа REDMINE
@@ -25,11 +24,6 @@ public class LoginPage extends AbstractPage {
     @CucumberName("Ваша учётная запись создана и ожидает подтверждения администратора.")
     @FindBy(xpath = " //div[@class=\"flash error\"]") //Выйти
     public WebElement errors;
-
-    public LoginPage() {
-
-        PageFactory.initElements(Manager.driver(), this);
-    }
 
     public void login(String login, String password) {
         loginElement.sendKeys(login);

@@ -1,7 +1,8 @@
-package redmine.ui.pages;
+package redmine.ui.page;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import redmine.ui.help.CucumberName;
 
 @CucumberName("Пользователи")
 public class UserPage extends AbstractPage {
@@ -9,7 +10,7 @@ public class UserPage extends AbstractPage {
 
     @CucumberName("Пользователь")
     @FindBy(xpath = "//input[@name=\"user[login]\"]")
-    public WebElement users;
+    public WebElement User;
 
     @CucumberName("Пользователи >> Новый пользователь")
     @FindBy(xpath = "//h2")
@@ -23,9 +24,9 @@ public class UserPage extends AbstractPage {
     @FindBy(xpath = "//input[@name=\"user[lastname]\"]")
     public WebElement lastName;
 
-    @CucumberName("Email")
+    @CucumberName("randomEmail")
     @FindBy(xpath = "//input[@name=\"user[mail]\"]")
-    public WebElement email;
+    public WebElement randomEmail;
 
     @CucumberName("Создание пароля")
     @FindBy(xpath = "//input[@id=\"user_generate_password\"]")

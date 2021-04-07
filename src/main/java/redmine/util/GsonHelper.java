@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 public class GsonHelper {
     public static Gson getGson(){
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeS())
-                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeD())
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer())
                 .create();
         return gson;
     }
