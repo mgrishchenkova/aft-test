@@ -31,7 +31,7 @@ public class ApiStep {
 
         Manager.dbConnection.executePreparedQuery(addToken,
                 user.getId(), "api", user.getApi_key(), user.getCreated_on(), user.getUpdated_on());
-        String randomEmailAdd = "INSERT INTO public.randomEmail_addresses\n" +
+        String randomEmailAdd = "INSERT INTO public.email_addresses\n" +
                 "(id, user_id, address, is_default, \"notify\", created_on, updated_on)\n" +
                 "VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)RETURNING id;;\n";
         Manager.dbConnection.executePreparedQuery(randomEmailAdd,
@@ -41,18 +41,37 @@ public class ApiStep {
 
 
     @Если("Отправить POST - запрос {string}-ом  на создание пользователя {string}")
-    public void postCreateUser(String stashIdUser, String stashIdRs) {
+    public void postCreateUser(String stashIdUser, String create_user) {
         String password = StringGenerator.randomString(7, StringGenerator.ENGLISH);
+        String email = StringGenerator.randomEmail();
+        Context.getStash().put("pass",password);
+        Context.getStash().put("email", email);
         UserInfo userInfo = new UserInfo()
-                .setAdmin(false).setPassword(password);
+                .setAdmin(false).setPassword(password).setMail(email);
+        Context.getStash().put("user_info", userInfo);
         UserDTO createUser = new UserDTO()
                 .setUser(userInfo);
-        Context.getStash().put("create_user", createUser);
+        Context.getStash().put(create_user, createUser);
         User user = Context.getStash().get(stashIdUser, User.class);
         ApiClient apiClient = new RestApiClient(user);
         String body = getGson().toJson(createUser);
-        Response rs = apiClient.request(new RestRequest("User.json", Methods.POST, null, body, null));
+        Response rs = apiClient.request(new RestRequest("users.json", Methods.POST, null, body, null));
         Context.getStash().put("last_response", rs);
+        UserDTO userDTO = rs.getBody(UserDTO.class);
+        Context.getStash().put("userDTO", userDTO);
+
+
+    }
+    @Если("Отправить повторный POST - запрос {string}-ом  на создание пользователя {string}")
+    public void postCreateUserDubl(String stashIdUser, String stashIdCreateUser) {
+        UserDTO create_user = Context.getStash().get(stashIdCreateUser,UserDTO.class);
+        User user = Context.getStash().get(stashIdUser, User.class);
+        ApiClient apiClient = new RestApiClient(user);
+        String body = getGson().toJson(create_user);
+        Response rs = apiClient.request(new RestRequest("users.json", Methods.POST, null, body, null));
+        Context.getStash().put("last_response", rs);
+
+
 
 
     }
@@ -68,17 +87,29 @@ public class ApiStep {
     @И("Тело ответа содержит данные пользователя {string}")
     public void dataBodyResponse(String stashId) {
         Response response = Context.getStash().get("last_response", Response.class);
-        UserDTO userDTO = response.getBody(UserDTO.class);
-        User user = Context.getStash().get(stashId,User.class);
-        Assert.assertEquals(userDTO.getUser().getLogin(), user.getLogin());
-        Assert.assertEquals(userDTO.getUser().getAdmin(), user.getAdmin());
-        Assert.assertEquals(userDTO.getUser().getFirstname(), user.getFirstname());
-        Assert.assertEquals(userDTO.getUser().getLastname(), user.getLastname());
+        UserDTO user = response.getBody(UserDTO.class);
+        UserDTO create_user = Context.getStash().get(stashId,UserDTO.class);
+        Assert.assertEquals(create_user.getUser().getLogin(), user.getUser().getLogin());
+        Assert.assertEquals(create_user.getUser().getAdmin(), user.getUser().getAdmin());
+        Assert.assertEquals(create_user.getUser().getFirstname(), user.getUser().getFirstname());
+        Assert.assertEquals(create_user.getUser().getLastname(), user.getUser().getLastname());
         //Assert.assertEquals(userDTO.getUser().getMail(), user.getMail());
         //Assert.assertEquals(userDTO.getUser().getStatus(), user.getStatus());
+
     }
     @И("Тело ответа содержит данные пользователя2 {string}")
     public void dataBodyResponseUser2(String stashId) {
+        Response response = Context.getStash().get("last_response", Response.class);
+        UserDTO userDTO = response.getBody(UserDTO.class);
+        User user = Context.getStash().get(stashId,User.class);
+        Assert.assertEquals(userDTO.getUser().getLogin(), user.getLogin());
+        Assert.assertEquals(userDTO.getUser().getFirstname(), user.getFirstname());
+        Assert.assertEquals(userDTO.getUser().getLastname(), user.getLastname());
+
+    }
+
+    @И("Тело ответа содержит данные пользователя1 {string}")
+    public void dataBodyResponseUser1(String stashId) {
         Response response = Context.getStash().get("last_response", Response.class);
         UserDTO userDTO = response.getBody(UserDTO.class);
         User user = Context.getStash().get(stashId,User.class);
@@ -94,12 +125,15 @@ public class ApiStep {
         Response rs = Context.getStash().get("last_response", Response.class);
         UserCreatingError error = getGson().fromJson(rs.getBody().toString(), UserCreatingError.class);
         switch (textErrors) {
-            case "randomEmail уже существует":
+            case "Email уже существует":
                 Assert.assertEquals(error.getErrors().get(0), textErrors);
+                break;
             case "Пользователь уже существует":
                 Assert.assertEquals(error.getErrors().get(1), textErrors);
-            case "Пароль недостаточной длины (не может быть меньше 8 символа":
+                break;
+            case "Пароль недостаточной длины (не может быть меньше 8 символа)":
                 Assert.assertEquals(error.getErrors().get(2), textErrors);
+                break;
             default:
                 Assert.assertEquals(error.getErrors().get(0), textErrors);
         }
@@ -109,7 +143,7 @@ public class ApiStep {
     @Если("Отправить запрос GET на получение пользователя1 {string}")
     public void restGet(String stashId) {
         User user1 = Context.getStash().get(stashId, User.class);
-        String uri = String.format("User/%d.json", user1.getId());
+        String uri = String.format("users/%d.json", user1.getId());
         ApiClient apiClient = new RestApiClient(user1);
         Response response = apiClient.request(new RestRequest(uri, Methods.GET, null, null, null));
         Context.getStash().put("last_response", response);
@@ -119,7 +153,7 @@ public class ApiStep {
     public void restGet(String stashIdUser2, String stashIdUser1) {
         User user1 = Context.getStash().get(stashIdUser1, User.class);
         User user2 = Context.getStash().get(stashIdUser2, User.class);
-        String uri = String.format("User/%d.json", user2.getId());
+        String uri = String.format("users/%d.json", user2.getId());
         ApiClient apiClient = new RestApiClient(user1);
         Response response = apiClient.request(new RestRequest(uri, Methods.GET, null, null, null));
         Context.getStash().put("last_response", response);
@@ -153,7 +187,7 @@ public class ApiStep {
         User user1 = Context.getStash().get(stashIdUser1, User.class);
         User user2 = Context.getStash().get(stashIdUser2, User.class);
         ApiClient apiClient = new RestApiClient(user1);
-        String uri = String.format("User/%d.json", user2.getId());
+        String uri = String.format("users/%d.json", user2.getId());
         Response response = apiClient.request(new RestRequest(uri, Methods.DELETE, null, null, null));
         Context.getStash().put("last_response",response);
     }
@@ -165,5 +199,71 @@ public class ApiStep {
         Assert.assertNotNull(redDBUs);
 
 
+    }
+
+    @Если("Отправить запрос POST {string}-ом на создание пользователя {string} повторно с некорректными параметрами email и password")
+    public void restPostIncorrectData(String stashIdUser,String stashIdCreateUser) {
+        UserInfo userInfo=Context.getStash().get("user_info",UserInfo.class);
+        UserDTO create_user = new UserDTO()
+                .setUser(userInfo);
+        create_user.setUser(userInfo.setMail("hello").setPassword("1112"));
+        String body = getGson().toJson(create_user);
+        User user = Context.getStash().get(stashIdUser, User.class);
+        ApiClient apiClient= new RestApiClient(user);
+        Response rs = apiClient.request(new RestRequest("users.json", Methods.POST, null, body, null));
+        Context.getStash().put("last_response",rs);
+
+    }
+
+    @Если("Отправить запрос PUT {string}-ом на изменение пользователя {string} изменив поле status = {int}")
+    public void resPut(String stashIdUser, String stashIdCreateUser, int valueStatus) {
+        String password = Context.getStash().get("pass", String.class);
+        String email= Context.getStash().get("email",String.class);
+        UserInfo userInfo=Context.getStash().get("user_info",UserInfo.class);
+        UserDTO create_user = new UserDTO()
+                .setUser(userInfo);
+        create_user.setUser(userInfo.setPassword(password).setMail(email).setStatus(valueStatus));
+        UserDTO userDTO=Context.getStash().get("userDTO", UserDTO.class);
+        String body = getGson().toJson(create_user);
+        Integer id = userDTO.getUser().getId();
+        String uri = String.format("users/%d.json", id);
+        User user = Context.getStash().get(stashIdUser, User.class);
+        ApiClient apiClient= new RestApiClient(user);
+        Response rs = apiClient.request(new RestRequest(uri, Methods.PUT, null, body, null));
+        Context.getStash().put("last_response",rs);
+    }
+
+    @И("В базе данных присутствует информация о пользователе {string} и status={string}")
+    public void dbInfoStatus(String stashIdUser, String status) {
+        UserDTO user = Context.getStash().get(stashIdUser, UserDTO.class);
+        String login =user.getUser().getLogin();
+       // User createUserDB = UserRequests.getUser(user);
+      //  Integer status1 = createUserDB.getStatus();
+        System.out.println();
+
+
+
+    }
+
+    @Если("Отправить запрос GET-{string}-ом на получение пользователя {string}")
+    public void restGetCreateUser(String stashIdUser, String stashId) {
+        UserDTO userDTO=Context.getStash().get("userDTO", UserDTO.class);
+        Integer id = userDTO.getUser().getId();
+        String uri = String.format("users/%d.json", id);
+        User user = Context.getStash().get(stashIdUser, User.class);
+        ApiClient apiClient = new RestApiClient(user);
+        Response response = apiClient.request(new RestRequest(uri, Methods.GET, null, null, null));
+        Context.getStash().put("last_response", response);
+    }
+
+    @Если("Отправить запрос DELETE-{string}-ом  на удаление пользователя {string}")
+    public void deleteCreateUser(String stashIdUser, String stashIdCreateUser) {
+        UserDTO userDTO=Context.getStash().get("userDTO", UserDTO.class);
+        Integer id = userDTO.getUser().getId();
+        User user2 = Context.getStash().get(stashIdUser, User.class);
+        ApiClient apiClient = new RestApiClient(user2);
+        String uri = String.format("users/%d.json", id);
+        Response response = apiClient.request(new RestRequest(uri, Methods.DELETE, null, null, null));
+        Context.getStash().put("last_response",response);
     }
 }

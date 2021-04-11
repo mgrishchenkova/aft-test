@@ -88,9 +88,9 @@ public class AssertionSteps {
         );
     }
 
-    @И("На странице \"Пользователи\" отображается элемент Пользователь {string} создан.")
+    @И("На странице \"Пользователи\" отображается элемент Пользователь <логин {string}-а> создан.")
     public void assertFieldUserLogin(String stashId) {
-        User user = (User) Context.getStash().get(stashId);
+        User user =Context.getStash().get(stashId, User.class);
         String element = String.format("Пользователь %s создан.", user.getLogin());
         String elementForm = UserPage.createUserText();
         Assert.assertEquals(element, elementForm);
@@ -201,7 +201,7 @@ public class AssertionSteps {
     @То("В базе данных появилась в таблице User появилась запись с данными пользователями {string}")
     public void addBD(String stashId) {
         String user = (String) Context.getStash().get(stashId);
-        String query = String.format("select * from User inner join randomEmail_addresses  on User.id=randomEmail_addresses.user_id where login='%s'", user);
+        String query = String.format("select * from users inner join email_addresses  on users.id=email_addresses.user_id where login='%s'", user);
         List<Map<String, Object>> result = Manager.dbConnection.executeQuery(query);
         Map<String, Object> dbUser = result.get(0);
         Assert.assertEquals(dbUser.get("login"), user);

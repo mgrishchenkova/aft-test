@@ -8,6 +8,8 @@
     <artifactId>aft-test</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <testng.version>7.1.0</testng.version>
         <lombok.version>1.18.16</lombok.version>
         <aspectj.version>1.8.10</aspectj.version>
@@ -17,6 +19,16 @@
 
     </properties>
     <build>
+        <testResources>
+        <testResource>
+            <directory>src/main/resources</directory>
+            <filtering>true</filtering>
+        </testResource>
+        <testResource>
+            <directory>src/test/resources</directory>
+            <filtering>true</filtering>
+        </testResource>
+        </testResources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -60,7 +72,15 @@
                 <configuration>
                     <source>8</source>
                     <target>8</target>
+                    <encoding>UTF-8</encoding>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
         </plugins>

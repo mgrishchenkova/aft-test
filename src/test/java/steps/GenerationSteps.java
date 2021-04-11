@@ -25,7 +25,7 @@ public class GenerationSteps {
         if (params.containsKey("status")) {
             user.setStatus(Integer.parseInt(params.get("status")));
         }
-        user.generate();
+       user.generate();
         Context.getStash().put(stashId, user);
     }
 

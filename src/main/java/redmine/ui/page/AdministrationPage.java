@@ -10,11 +10,11 @@ import java.util.List;
 public class AdministrationPage extends AbstractPage {
 
     @CucumberName("Пользователи")
-    @FindBy(xpath = "//a[@class=\"icon icon-user User\"]")
+    @FindBy(xpath = "//a[@class=\"icon icon-user users\"]")
     public WebElement User;
 
     @CucumberName("Таблица пользователей")
-    @FindBy(xpath = "//table[@class=\"list User\"]")
+    @FindBy(xpath = "//table[@class=\"list users\"]")
     public WebElement UserTable;
 
     @CucumberName("Пользователь")

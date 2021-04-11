@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class UserRequests {
 
     public static List<User> getAllUser(){
-        String query="select *from User;";
+        String query="select *from users;";
         List<Map<String, Object>> result = Manager.dbConnection.executeQuery(query);
         return result.stream()
                 .map(map -> {
@@ -51,7 +51,7 @@ public class UserRequests {
     }
 
     public static User updateUser(User user){
-        String query="UPDATE public.User\n" +
+        String query="UPDATE public.users\n" +
                 "SET hashed_password=?, firstname=?, lastname=?, \"admin\"=?, status=?, last_login_on=?, \"language\"=?, auth_source_id=?, created_on=?, updated_on=?, \"type\"=?, identity_url=?, mail_notification=?, salt=?, must_change_passwd=?, passwd_changed_on=?\n" +
                 "WHERE login=? RETURNING id;\n";
         List<Map<String,Object>> result = Manager.dbConnection.executePreparedQuery(query,
@@ -81,7 +81,7 @@ public class UserRequests {
     }
 
     public static User addUser(User user){
-        String query="INSERT INTO public.User\n" +
+        String query="INSERT INTO public.users\n" +
                 "(id, login, hashed_password, firstname, lastname, \"admin\", status, last_login_on, \"language\", auth_source_id, created_on, updated_on, \"type\", identity_url, mail_notification, salt, must_change_passwd, passwd_changed_on)\n" +
                 "VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id;\n";
         List<Map<String,Object>> result = Manager.dbConnection.executePreparedQuery(query,

@@ -3,6 +3,7 @@ package API;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import redmine.Manager.Context;
 import redmine.Manager.Manager;
 import redmine.api.implementations.RestApiClient;
 import redmine.api.implementations.RestRequest;
@@ -49,8 +50,11 @@ public class TestCase1 {
     public void testPostUser() {
 
         String password=StringGenerator.randomString(7,StringGenerator.ENGLISH);
+        String email=StringGenerator.randomEmail();
+        Context.getStash().put("pass", password);
+        Context.getStash().put("email", email);
         UserInfo userInfo = new UserInfo()
-                .setAdmin(false).setPassword(password);
+                .setAdmin(false).setPassword(password).setMail(email);
         UserDTO createUser = new UserDTO()
                 .setUser(userInfo);
         String body = getGson().toJson(createUser);

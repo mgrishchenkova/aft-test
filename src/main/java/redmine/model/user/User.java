@@ -1,6 +1,6 @@
 package redmine.model.user;
 
-import lombok.*;
+import lombok.Data;
 import lombok.experimental.Accessors;
 import redmine.db.UserRequests;
 import redmine.model.Generatable;
@@ -14,8 +14,8 @@ import java.time.format.DateTimeFormatter;
 import static org.apache.commons.codec.digest.DigestUtils.sha1Hex;
 
 
-@Accessors(chain = true)
 @Data
+@Accessors(chain = true)
 public class User implements Generatable<User> {
 
     private Integer id;
@@ -46,8 +46,7 @@ public class User implements Generatable<User> {
     @Override
     public User read() {
 
-        User user = UserRequests.getUser(this);
-        return user;
+        return UserRequests.getUser(this);
     }
 
     @Override
@@ -59,5 +58,6 @@ public class User implements Generatable<User> {
     @Override
     public User create() {
         return UserRequests.addUser(this);
+
     }
 }
