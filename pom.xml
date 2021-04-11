@@ -40,7 +40,7 @@
                     </argLine>
                     <testFailureIgnore>true</testFailureIgnore>
                     <systemPropertyVariables>
-                        <allure.results.directory>${project.build.directory}\allure-results</allure.results.directory>
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
                         <dataproviderthreadcount>1</dataproviderthreadcount>
                         <parallel>methods</parallel>
                     </systemPropertyVariables>
