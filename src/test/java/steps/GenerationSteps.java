@@ -9,7 +9,10 @@ import redmine.model.project.Project;
 import redmine.model.role.*;
 import redmine.model.user.User;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static java.lang.Boolean.parseBoolean;
 import static java.lang.Integer.parseInt;
@@ -25,7 +28,7 @@ public class GenerationSteps {
         if (params.containsKey("status")) {
             user.setStatus(Integer.parseInt(params.get("status")));
         }
-       user.generate();
+        user.generate();
         Context.getStash().put(stashId, user);
     }
 
@@ -87,7 +90,15 @@ public class GenerationSteps {
         User user = Context.getStash().get(stashIdUser, User.class);
         Project project = Context.getStash().get(stashIdProject, Project.class);
         Role role = Context.getStash().get(stashIdRole, Role.class);
-        Project updateProject = ProjectRequest.addUserAndRoleToProject(project, user, role);
+        ProjectRequest.addUserAndRoleToProject(project, user, role);
+    }
 
+    @И("Я сохраняю список прав в переменную {string}:")
+    public void createPermissions(String stashId, List<String> permissionsDescriptions) {
+        Set<RolePermission> permissions = permissionsDescriptions.stream()
+                .map(RolePermission::of)
+                .collect(Collectors.toSet());
+        RolePermissions rolePermissions = new RolePermissions(permissions);
+        Context.getStash().put(stashId, rolePermissions);
     }
 }

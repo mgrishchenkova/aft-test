@@ -32,7 +32,7 @@ public class Role implements Generatable<Role> {
 
     @CucumberName("Права")
     private RolePermissions rolePermissionSet = new RolePermissions(new HashSet<>());
-    ;
+
 
     @CucumberName("Видимость трудозатрат")
     private TimeEntriesVisibility timeEntriesVisibility = TimeEntriesVisibility.ALL;
@@ -59,7 +59,9 @@ public class Role implements Generatable<Role> {
 
     @Override
     public Role read() {
-        return RoleRequests.getRole(this);
+        return id == null
+                ? RoleRequests.getRoleName(name)
+                : RoleRequests.getRoleId(id);
 
     }
 
