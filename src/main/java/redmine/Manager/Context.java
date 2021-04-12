@@ -1,5 +1,8 @@
 package redmine.Manager;
 
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
+
 public class Context {
     private static Stash stash;
 
@@ -28,10 +31,11 @@ public class Context {
         }
     }
 
-    // @Step("Сущности в контексте автотеста")
-    //   public static void saveStashToAllure() {
-    //  getStash().getEntities().forEach(
-    //            (key, value) -> Allure.addAttachment(key, value.toString())
-    //  );
-    // }
+
+    @Step
+      public static void saveStashToAllure() {
+     getStash().getEntities().forEach(
+    (key, value) -> Allure.addAttachment(key, value.toString())
+      );
+     }
 }
