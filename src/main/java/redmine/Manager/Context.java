@@ -3,6 +3,9 @@ package redmine.Manager;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 
+/**
+ *Context, где будут содержаться сущности, сохраненные в ходе выполнения тестоы
+ */
 public class Context {
     private static Stash stash;
 
@@ -33,9 +36,9 @@ public class Context {
 
 
     @Step("Сущности сохраненные в Context в ходе выполнения тестов")
-      public static void saveStashToAllure() {
-     getStash().getEntities().forEach(
-    (key, value) -> Allure.addAttachment(key, value.toString())
-      );
-     }
+    public static void saveStashToAllure() {
+        getStash().getEntities().forEach(
+                (key, value) -> Allure.addAttachment(key, value.toString())
+        );
+    }
 }
