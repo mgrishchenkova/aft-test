@@ -32,7 +32,7 @@ public class Context {
     }
 
 
-    @Step
+    @Step("Сущности сохраненные в Context в ходе выполнения тестов")
       public static void saveStashToAllure() {
      getStash().getEntities().forEach(
     (key, value) -> Allure.addAttachment(key, value.toString())
