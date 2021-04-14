@@ -7,7 +7,7 @@ import io.qameta.allure.Step;
  * Context, где будут содержаться сущности, сохраненные в ходе выполнения тестоы
  */
 public class Context {
-    private static Stash stash;
+    private static ThreadLocal<Stash> stash= new ThreadLocal<>();
 
     public static void put(String stashId, Object entity) {
         getStash().put(stashId, entity);
@@ -22,15 +22,15 @@ public class Context {
     }
 
     public static Stash getStash() {
-        if (stash == null) {
-            stash = new Stash();
+        if (stash.get() == null) {
+            stash.set(new Stash());
         }
-        return stash;
+        return stash.get();
     }
 
     public static void clearStash() {
-        if (stash != null) {
-            stash = null;
+        if (stash.get() != null) {
+            stash.set(null);
         }
     }
 
