@@ -21,62 +21,62 @@ public class ProjectRequest {
                     project.setName((String) map.get("name"));
                     project.setDescription((String) map.get("description"));
                     project.setHomepage((String) map.get("homepage"));
-                    project.setIs_public((Boolean) map.get("is_public"));
-                    project.setParent_id((Integer) map.get("parent_id"));
+                    project.setIsPublic((Boolean) map.get("is_public"));
+                    project.setParentId((Integer) map.get("parent_id"));
                     project.setIdentifier((String) map.get("identifier"));
                     project.setStatus((Integer) map.get("status"));
                     project.setLft((Integer) map.get("lft"));
                     project.setRgt((Integer) map.get("rgt"));
-                    project.setInherit_members((Boolean) map.get("inherit_members"));
-                    project.setDefault_version_id((Integer) map.get("default_version_id"));
-                    project.setDefault_assigned_to_id((Integer) map.get("default_assigned_to_id"));
+                    project.setInheritMembers((Boolean) map.get("inherit_members"));
+                    project.setDefaultVersionId((Integer) map.get("default_version_id"));
+                    project.setDefaultAssignedToId((Integer) map.get("default_assigned_to_id"));
                     return project;
                 }).collect(Collectors.toList());
     }
 
     public static Project createProject(Project project) {
-        String query = "INSERT INTO public.projects\n" +
+        String query = "insert into public.projects\n" +
                 "(id, \"name\", description, homepage, is_public, parent_id, created_on, updated_on, identifier, status, lft, rgt, inherit_members, default_version_id, default_assigned_to_id)\n" +
-                "VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)RETURNING id;";
+                "values(default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)returning id;";
         List<Map<String, Object>> result = Manager.dbConnection.executePreparedQuery(query,
                 project.getName(),
                 project.getDescription(),
                 project.getHomepage(),
-                project.getIs_public(),
-                project.getParent_id(),
-                project.getCreated_on(),
-                project.getUpdated_on(),
+                project.getIsPublic(),
+                project.getParentId(),
+                project.getCreatedOn(),
+                project.getUpdatedOn(),
                 project.getIdentifier(),
                 project.getStatus(),
                 project.getLft(),
                 project.getRgt(),
-                project.getInherit_members(),
-                project.getDefault_assigned_to_id(),
-                project.getDefault_version_id());
+                project.getInheritMembers(),
+                project.getDefaultAssignedToId(),
+                project.getDefaultVersionId());
         project.setId((Integer) result.get(0).get("id"));
         return project;
     }
 
     public static Project updateProject(Project project) {
         String query = "\n" +
-                "UPDATE public.projects\n" +
-                "SET description='?', homepage=?, is_public=?, parent_id=?, created_on='?', updated_on='?', identifier='?', status=?, lft=?, rgt=?, inherit_members=?, default_version_id=?, default_assigned_to_id=?\n" +
-                "WHERE name=? RETURNING id;\n";
+                "update public.projects\n" +
+                "set description='?', homepage=?, is_public=?, parent_id=?, created_on='?', updated_on='?', identifier='?', status=?, lft=?, rgt=?, inherit_members=?, default_version_id=?, default_assigned_to_id=?\n" +
+                "where name=? returning id;\n";
         List<Map<String, Object>> result = Manager.dbConnection.executePreparedQuery(query,
                 project.getName(),
                 project.getDescription(),
                 project.getHomepage(),
-                project.getIs_public(),
-                project.getParent_id(),
-                project.getCreated_on(),
-                project.getUpdated_on(),
+                project.getIsPublic(),
+                project.getParentId(),
+                project.getCreatedOn(),
+                project.getUpdatedOn(),
                 project.getIdentifier(),
                 project.getStatus(),
                 project.getLft(),
                 project.getRgt(),
-                project.getInherit_members(),
-                project.getDefault_assigned_to_id(),
-                project.getDefault_version_id());
+                project.getInheritMembers(),
+                project.getDefaultAssignedToId(),
+                project.getDefaultVersionId());
         project.setId((Integer) result.get(0).get("id"));
         return project;
     }

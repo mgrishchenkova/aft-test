@@ -1,5 +1,6 @@
 package redmine.api.implementations;
 
+import io.qameta.allure.Allure;
 import io.restassured.http.Header;
 import lombok.Getter;
 import redmine.api.interfaces.Response;
@@ -21,12 +22,12 @@ public class RestResponse implements Response {
     }
 
     public RestResponse(io.restassured.response.Response restAssuredResponse) {
+        Allure.step("Получение ответа");
         this.statusCode = restAssuredResponse.getStatusCode();
         this.headers = restAssuredResponse.getHeaders().asList().stream()
                 .collect(Collectors.toMap(Header::getName, Header::getValue));
         this.body = restAssuredResponse.getBody().asString();
     }
-
 
     @Override
     public <T> T getBody(Class<T> clazz) {

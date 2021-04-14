@@ -18,24 +18,24 @@ import java.time.LocalDateTime;
 public class Project implements Generatable<Project> {
 
     private Integer id;
-    private String name= "Mary"+ StringGenerator.randomString(6,StringGenerator.ENGLISH);
-    private String description="description11";
+    private String name = "Mary" + StringGenerator.randomString(6, StringGenerator.ENGLISH);
+    private String description = "description11";
     private String homepage;
-    private Boolean is_public=false;
-    private Integer parent_id;
-    private Timestamp created_on=Timestamp.valueOf(LocalDateTime.now());;
-    private Timestamp updated_on=Timestamp.valueOf(LocalDateTime.now());;
-    private String identifier=StringGenerator.randomString(10,StringGenerator.ENGLISH);
-    private Integer status=1;
-    private Integer lft=1;
-    private Integer rgt=1;
-    private Boolean inherit_members=false;
-    private Integer default_version_id;
-    private Integer default_assigned_to_id;
+    private Boolean isPublic = false;
+    private Integer parentId;
+    private Timestamp createdOn = Timestamp.valueOf(LocalDateTime.now());
+    private Timestamp updatedOn = Timestamp.valueOf(LocalDateTime.now());
+    private String identifier = StringGenerator.randomString(10, StringGenerator.ENGLISH);
+    private Integer status = 1;
+    private Integer lft = 1;
+    private Integer rgt = 1;
+    private Boolean inheritMembers = false;
+    private Integer defaultVersionId;
+    private Integer defaultAssignedToId;
 
     @Override
     public Project read() {
-        Project project= ProjectRequest.getProject(this);
+        Project project = ProjectRequest.getProject(this);
         return project;
     }
 

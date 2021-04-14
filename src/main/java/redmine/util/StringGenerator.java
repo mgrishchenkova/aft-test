@@ -17,9 +17,9 @@ public class StringGenerator {
 
     }
 
-    public static String randomEmail (){
+    public static String randomEmail() {
         StringBuilder sb = new StringBuilder();
-        return (sb.append(ENGLISH.charAt(new Random().nextInt(26)))+"@"+sb.append(ENGLISH.charAt(new Random().nextInt(26)))+"."+sb.append(ENGLISH.charAt(new Random().nextInt(26))));
+        return (sb.append(ENGLISH.charAt(new Random().nextInt(26))) + "@" + sb.append(ENGLISH.charAt(new Random().nextInt(26))) + "." + sb.append(ENGLISH.charAt(new Random().nextInt(26))));
 
 
     }

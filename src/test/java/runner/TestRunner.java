@@ -6,9 +6,11 @@ import cucumber.api.testng.CucumberFeatureWrapper;
 import cucumber.api.testng.PickleEventWrapper;
 import org.testng.ITest;
 import org.testng.annotations.*;
+import redmine.Manager.Context;
 import redmine.Manager.Manager;
 
 import java.lang.reflect.Method;
+
 @CucumberOptions(
         plugin = {
                 "pretty",
@@ -22,6 +24,7 @@ import java.lang.reflect.Method;
 
 public class TestRunner extends AbstractTestNGCucumberTests implements ITest {
     private static String testCaseName;
+
     @BeforeClass(alwaysRun = true)
     @Override
     public void setUpClass() throws Exception {
@@ -44,13 +47,15 @@ public class TestRunner extends AbstractTestNGCucumberTests implements ITest {
     public void tearDownClass() throws Exception {
         super.tearDownClass();
     }
+
     @BeforeMethod
     public void beforeMethod(Method name, Object[] testData) {
         testCaseName = testData[0].toString();
     }
+
     @AfterMethod
     public void afterMethod(Method name, Object[] testDate) {
-
+        Context.clearStash();
         Manager.driverQuit();
     }
 

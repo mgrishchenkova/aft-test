@@ -18,11 +18,12 @@ public class Property {
     public static String getStringProperties(String key) {
         return property.getProperty(key);
     }
-    public static Integer getIntegerProperty(String key){
+
+    public static Integer getIntegerProperty(String key) {
         return Integer.parseInt(getStringProperties(key));
     }
 
-    public static Boolean getBooleanProperty(String key){
+    public static Boolean getBooleanProperty(String key) {
         return Boolean.parseBoolean(getStringProperties(key));
     }
 }

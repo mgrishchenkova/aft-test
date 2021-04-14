@@ -16,17 +16,10 @@ public class Page {
     @SneakyThrows
     public static <T extends redmine.ui.page.AbstractPage> T getPage(Class<T> clazz) {
         //
-        T page = null;
-        try {
-            page = clazz.newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        T page = clazz.newInstance();
         PageFactory.initElements(Manager.driver(), page);
-            Manager.takeScreenshot();
-            return page;
+        Manager.takeScreenshot();
+        return page;
 
     }
 }

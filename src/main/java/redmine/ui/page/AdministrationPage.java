@@ -47,5 +47,4 @@ public class AdministrationPage extends AbstractPage {
     public WebElement newUser;
 
 
-
 }

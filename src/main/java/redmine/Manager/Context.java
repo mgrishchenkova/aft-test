@@ -4,7 +4,7 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 
 /**
- *Context, где будут содержаться сущности, сохраненные в ходе выполнения тестоы
+ * Context, где будут содержаться сущности, сохраненные в ходе выполнения тестоы
  */
 public class Context {
     private static Stash stash;

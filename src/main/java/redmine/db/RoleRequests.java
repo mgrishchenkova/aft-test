@@ -103,8 +103,9 @@ public class RoleRequests {
                 .orElse(null);
 
     }
+
     public static Role getRoleName(String name) {
-        String query = String.format("select *from roles where name='%s'",name);
+        String query = String.format("select *from roles where name='%s'", name);
         List<Map<String, Object>> result = Manager.dbConnection.executeQuery(query);
         return result.stream()
                 .map(map -> {

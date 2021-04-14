@@ -12,11 +12,11 @@ public enum UserVisibility {
         this.description = description;
     }
 
-    public static UserVisibility of(String description){
+    public static UserVisibility of(String description) {
         return Stream.of(values())
-                .filter(it->it.description.equals(description))
+                .filter(it -> it.description.equals(description))
                 .findFirst()
-                .orElseThrow(()->new IllegalArgumentException("Не найден UserVisibility"+description));
+                .orElseThrow(() -> new IllegalArgumentException("Не найден UserVisibility" + description));
 
     }
 

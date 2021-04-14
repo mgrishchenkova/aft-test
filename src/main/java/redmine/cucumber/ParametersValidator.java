@@ -8,6 +8,7 @@ import redmine.ui.help.CucumberName;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Map;
+
 public class ParametersValidator {
 
     public static void validateRoleParameters(Map<String, String> parameters) {
@@ -16,23 +17,23 @@ public class ParametersValidator {
                 "Список допустимых параметров при работе с ролями не содержит параметр " + key
         ));
     }
-    public static void validateUserParameters(Map<String, String> parameters) {
 
-    }
+    /**
+     * Метод заменяет строку вида ${stashId ->значение какого-то поля}
+     * где значение какого-то поля - это аннотация поля
+     */
     @SneakyThrows
     public static String replaceCucumberVariables(String rawString) {
         while (rawString.contains("${")) {
             String replacement = rawString.substring(rawString.indexOf("${"), rawString.indexOf("}") + 1);
             String stashId = replacement.substring(2, replacement.indexOf("->"));
             String fieldDescription = replacement.substring(replacement.indexOf("->") + 2, replacement.length() - 1);
-
             Object stashObject = Context.get(stashId.trim());
-
             Field foundFiend = Arrays.stream(stashObject.getClass().getDeclaredFields())
                     .filter(field -> field.isAnnotationPresent(CucumberName.class))
                     .filter(field -> field.getAnnotation(CucumberName.class).value().equals(fieldDescription.trim()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalStateException("Не задана аннотация @CucumberName "+fieldDescription));
+                    .orElseThrow(() -> new IllegalStateException("Не задана аннотация @CucumberName " + fieldDescription));
             foundFiend.setAccessible(true);
 
             String result = foundFiend.get(stashObject).toString();

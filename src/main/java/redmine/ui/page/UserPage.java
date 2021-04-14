@@ -40,8 +40,8 @@ public class UserPage extends AbstractPage {
     @FindBy(xpath = "//div[text()='Пользователь ']")
     public static WebElement createUser;
 
-    public static String createUserText(){
-       return createUser.getText();
+    public static String createUserText() {
+        return createUser.getText();
     }
 
 }

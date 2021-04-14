@@ -1,6 +1,7 @@
 package redmine.Manager;
 
 import com.google.common.collect.ImmutableMap;
+import io.qameta.allure.Step;
 import lombok.SneakyThrows;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -17,8 +18,8 @@ import java.util.concurrent.TimeUnit;
 public class Manager {
     public final static ConnectionDB dbConnection = new ConnectionDB();
     //TODO изменить на ThreadLocal когда будет многопточность
-    private static WebDriver driver;
-    private static WebDriverWait wait;
+    private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    private static ThreadLocal<WebDriverWait> wait = new ThreadLocal<>();
 
 
     /**
@@ -28,13 +29,13 @@ public class Manager {
      */
 
     public static WebDriver driver() {
-        if (driver == null) {
-            driver = getPropertyDriver();
-            driver.manage().window().maximize();
-            driver.manage().timeouts().implicitlyWait(Property.getIntegerProperty("ui.implicitly.wait"), TimeUnit.SECONDS);
-            wait = new WebDriverWait(driver, Property.getIntegerProperty("ui.condition.wait"));
+        if (driver.get() == null) {
+            driver.set(getPropertyDriver());
+            driver.get().manage().window().maximize();
+            driver.get().manage().timeouts().implicitlyWait(Property.getIntegerProperty("ui.implicitly.wait"), TimeUnit.SECONDS);
+            wait.set(new WebDriverWait(driver.get(), Property.getIntegerProperty("ui.condition.wait")));
         }
-        return driver;
+        return driver.get();
     }
 
     /**
@@ -42,17 +43,17 @@ public class Manager {
      */
 
     public static void driverQuit() {
-        if (driver != null) {
-            driver.quit();
+        if (driver.get() != null) {
+            driver.get().quit();
         }
-        driver = null;
+        driver.set(null);
     }
 
     public static WebDriverWait waiter() {
-        return wait;
+        return wait.get();
     }
 
-
+    @Step("Сделать скриншот")
     public static byte[] takeScreenshot() {
         return ((TakesScreenshot) driver()).getScreenshotAs(OutputType.BYTES);
     }
@@ -77,7 +78,7 @@ public class Manager {
     @SneakyThrows
     private static WebDriver getPropertyDriver() {
         if (Property.getBooleanProperty("remote")) {
-          // remote = true
+            // remote = true
             MutableCapabilities capabilities = new ChromeOptions();
             capabilities.setCapability("browserName", Property.getStringProperties("browser"));
             capabilities.setCapability("browserVersion", Property.getStringProperties("browser.version"));

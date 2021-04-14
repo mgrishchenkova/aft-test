@@ -1,5 +1,7 @@
 package redmine.api.implementations;
 
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
 import io.restassured.http.Method;
 import io.restassured.specification.RequestSpecification;
@@ -16,14 +18,13 @@ import static io.restassured.RestAssured.given;
 public class RestApiClient implements ApiClient {
     private String token;
 
-
     public RestApiClient(User user) {
         Objects.requireNonNull(user, "Пользователь должен быть инициализирован");
-        Objects.requireNonNull(user.getApi_key(), "У пользователя должен быть создан ключ API");
-        token = user.getApi_key();
+        Objects.requireNonNull(user.getApiKey(), "У пользователя должен быть создан ключ API");
+        token = user.getApiKey();
     }
 
-
+    @Step("Выполнение Rest-запроса")
     @Override
     public Response request(Request request) {
         RequestSpecification specification = given();
@@ -42,8 +43,14 @@ public class RestApiClient implements ApiClient {
         io.restassured.response.Response response = specification.log().all().request(method);
         response.then().log().all();
         Response restResponse = new RestResponse(response);
-        //addAttachments(request, restResponse);
+        addAttachments(request, restResponse);
         return restResponse;
+
+    }
+
+    private void addAttachments(Request request, Response response) {
+        Allure.addAttachment("Запрос", request.toString());
+        Allure.addAttachment("Ответ", response.toString());
     }
 
 

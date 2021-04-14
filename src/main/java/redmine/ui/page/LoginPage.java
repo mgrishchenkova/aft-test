@@ -11,7 +11,6 @@ import redmine.ui.help.CucumberName;
 public class LoginPage extends AbstractPage {
 
 
-
     @FindBy(xpath = "//input[@id=\"username\"]")
     private WebElement loginElement;
 

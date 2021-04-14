@@ -21,10 +21,6 @@ public class ConnectionDB {
         return connection;
     }
 
-    public ConnectionDB() {
-        initVariables();
-        connect();
-    }
 
     private void initVariables() {
         dbHost = Property.getStringProperties("dbHost");
@@ -70,7 +66,7 @@ public class ConnectionDB {
     }
 
     /**
-    *Выполнение sql-запроса, содержаший параметры
+     * Выполнение sql-запроса, содержаший параметры
      */
     @SneakyThrows
     public List<Map<String, Object>> executePreparedQuery(String query, Object... parameters) {

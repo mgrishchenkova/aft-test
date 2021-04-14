@@ -33,15 +33,15 @@ public class ApiStep {
         String addToken = "INSERT INTO public.tokens\n" +
                 "(id, user_id, \"action\", value, created_on, updated_on)\n" +
                 "VALUES(DEFAULT, ?, ?, ?, ?, ?)RETURNING id;\n";
-        String apiKey = user.getApi_key();
+        String apiKey = user.getApiKey();
 
         Manager.dbConnection.executePreparedQuery(addToken,
-                user.getId(), "api", user.getApi_key(), user.getCreated_on(), user.getUpdated_on());
+                user.getId(), "api", user.getApiKey(), user.getCreatedOn(), user.getUpdatedOn());
         String randomEmailAdd = "INSERT INTO public.email_addresses\n" +
                 "(id, user_id, address, is_default, \"notify\", created_on, updated_on)\n" +
                 "VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)RETURNING id;;\n";
         Manager.dbConnection.executePreparedQuery(randomEmailAdd,
-                user.getId(), user.getMail(), true, true, user.getCreated_on(), user.getUpdated_on());
+                user.getId(), user.getMail(), true, true, user.getCreatedOn(), user.getUpdatedOn());
         Context.getStash().put("api_key", apiKey);
     }
 
@@ -109,8 +109,8 @@ public class ApiStep {
         UserDTO userDTO = response.getBody(UserDTO.class);
         User user = Context.getStash().get(stashId, User.class);
         Assert.assertEquals(userDTO.getUser().getLogin(), user.getLogin());
-        Assert.assertEquals(userDTO.getUser().getFirstname(), user.getFirstname());
-        Assert.assertEquals(userDTO.getUser().getLastname(), user.getLastname());
+        Assert.assertEquals(userDTO.getUser().getFirstname(), user.getFirstName());
+        Assert.assertEquals(userDTO.getUser().getLastname(), user.getLastName());
 
     }
 
@@ -120,8 +120,8 @@ public class ApiStep {
         UserDTO userDTO = response.getBody(UserDTO.class);
         User user = Context.getStash().get(stashId, User.class);
         Assert.assertEquals(userDTO.getUser().getLogin(), user.getLogin());
-        Assert.assertEquals(userDTO.getUser().getFirstname(), user.getFirstname());
-        Assert.assertEquals(userDTO.getUser().getLastname(), user.getLastname());
+        Assert.assertEquals(userDTO.getUser().getFirstname(), user.getFirstName());
+        Assert.assertEquals(userDTO.getUser().getLastname(), user.getLastName());
 
     }
 
@@ -218,22 +218,22 @@ public class ApiStep {
                     user.setId((Integer) map.get("id"));
                     user.setLogin("");
                     user.setLogin((String) map.get("login"));
-                    user.setFirstname((String) map.get("firstname"));
-                    user.setLastname((String) map.get("lastname"));
+                    user.setFirstName((String) map.get("firstname"));
+                    user.setLastName((String) map.get("lastname"));
                     user.setAdmin((Boolean) map.get("admin"));
                     user.setStatus((Integer) map.get("status"));
-                    user.setHashed_password((String) map.get("hashed_password"));
+                    user.setHashedPassword((String) map.get("hashed_password"));
                     user.setSalt((String) map.get("salt"));
-                    user.setLast_login_on((Timestamp) map.get("last_login_on"));
+                    user.setLastLoginOn((Timestamp) map.get("last_login_on"));
                     user.setLanguage((String) map.get("language"));
-                    user.setAuth_source_id((Integer) map.get("auth_source_id"));
-                    user.setCreated_on((Timestamp) map.get("created_on"));
-                    user.setUpdated_on((Timestamp) map.get("updated_on"));
+                    user.setAuthSourceId((Integer) map.get("auth_source_id"));
+                    user.setCreatedOn((Timestamp) map.get("created_on"));
+                    user.setUpdatedOn((Timestamp) map.get("updated_on"));
                     user.setType((String) map.get("type"));
-                    user.setIdentity_url((String) map.get("identity_url"));
-                    user.setMail_notification((String) map.get("mail_notification"));
-                    user.setMust_change_passwd((Boolean) map.get("must_change_passwd"));
-                    user.setPasswd_changed_on((Timestamp) map.get("passwd_changed_on"));
+                    user.setIdentityUrl((String) map.get("identity_url"));
+                    user.setMailNotification((String) map.get("mail_notification"));
+                    user.setMustChangePasswd((Boolean) map.get("must_change_passwd"));
+                    user.setPasswdChangedOn((Timestamp) map.get("passwd_changed_on"));
                     return user;
 
                 }).collect(Collectors.toList());

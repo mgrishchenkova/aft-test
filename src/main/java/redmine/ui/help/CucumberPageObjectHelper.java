@@ -25,7 +25,7 @@ public class CucumberPageObjectHelper {
     }
 
     @SneakyThrows
-    public static AbstractPage getPageBy(String cucumberPageName){
+    public static AbstractPage getPageBy(String cucumberPageName) {
         Reflections reflections = new Reflections("redmine.ui.page");
         Set<Class<?>> allClasses = reflections.getTypesAnnotatedWith(CucumberName.class);
         Class<?> pageClass = allClasses.stream()

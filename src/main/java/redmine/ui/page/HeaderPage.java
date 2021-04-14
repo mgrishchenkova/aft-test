@@ -59,8 +59,4 @@ public class HeaderPage extends redmine.ui.page.AbstractPage {
     public WebElement login;
 
 
-
-
-
-
 }
