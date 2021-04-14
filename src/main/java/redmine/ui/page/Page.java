@@ -1,8 +1,11 @@
 package redmine.ui.page;
 
+import io.qameta.allure.Allure;
 import lombok.SneakyThrows;
 import org.openqa.selenium.support.PageFactory;
 import redmine.Manager.Manager;
+
+import java.io.ByteArrayInputStream;
 
 public class Page {
     /**
@@ -18,7 +21,7 @@ public class Page {
         //
         T page = clazz.newInstance();
         PageFactory.initElements(Manager.driver(), page);
-        Manager.takeScreenshot();
+        Allure.addAttachment("screenshot", new ByteArrayInputStream(Manager.takeScreenshot()));
         return page;
 
     }

@@ -55,6 +55,7 @@ public class Manager {
 
     @Step("Сделать скриншот")
     public static byte[] takeScreenshot() {
+
         return ((TakesScreenshot) driver()).getScreenshotAs(OutputType.BYTES);
     }
 

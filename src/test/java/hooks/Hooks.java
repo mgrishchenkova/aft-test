@@ -21,7 +21,9 @@ public class Hooks {
     public void addScreenshotOnFailed(Scenario scenario) throws IOException {
         if (scenario.isFailed()) {
             try {
-                Allure.addAttachment("Failed step", new FileInputStream(String.valueOf(Manager.takeScreenshot())));
+                byte[] screenshot = Manager.takeScreenshot();
+
+                Allure.addAttachment("Failed step", new FileInputStream(String.valueOf(screenshot)));
             } catch (FileNotFoundException ignored) {}
         }
     }
