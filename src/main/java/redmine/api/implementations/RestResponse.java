@@ -30,6 +30,18 @@ public class RestResponse implements Response {
     }
 
     @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(statusCode).append(System.lineSeparator());
+        headers.forEach((key, value) -> sb.append(key).append("=").append(value).append(System.lineSeparator()));
+        sb.append(System.lineSeparator());
+        if (body != null) {
+            sb.append(body.toString());
+        }
+        return sb.toString();
+    }
+
+    @Override
     public <T> T getBody(Class<T> clazz) {
         return GsonHelper.getGson().fromJson(body.toString(), clazz);
     }
