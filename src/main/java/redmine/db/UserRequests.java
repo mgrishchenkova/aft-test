@@ -87,6 +87,7 @@ public class UserRequests {
                 "(id, login, hashed_password, firstname, lastname, \"admin\", status, last_login_on, \"language\", auth_source_id, created_on, updated_on, \"type\", identity_url, mail_notification, salt, must_change_passwd, passwd_changed_on)\n" +
                 "values(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning id;\n";
         List<Map<String, Object>> result = Manager.dbConnection.executePreparedQuery(query,
+                user.getLogin(),
                 user.getHashedPassword(),
                 user.getFirstName(),
                 user.getLastName(),
@@ -102,8 +103,8 @@ public class UserRequests {
                 user.getMailNotification(),
                 user.getSalt(),
                 user.getMustChangePasswd(),
-                user.getPasswdChangedOn(),
-                user.getLogin()
+                user.getPasswdChangedOn()
+
 
         );
         user.setId((Integer) result.get(0).get("id"));

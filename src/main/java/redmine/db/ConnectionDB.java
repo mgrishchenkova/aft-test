@@ -20,6 +20,10 @@ public class ConnectionDB {
     public Connection getConnection() {
         return connection;
     }
+    public ConnectionDB() {
+        initVariables();
+        connect();
+    }
 
 
     private void initVariables() {
