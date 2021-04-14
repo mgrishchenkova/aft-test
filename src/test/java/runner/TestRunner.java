@@ -18,7 +18,8 @@ import java.lang.reflect.Method;
                 "json:target/cucumber.json"
         },
         glue = {"steps", "hooks"},
-        features = "src/test/resources"
+        features = "src/test/resources",
+        tags = {"@ui or @api"}
 )
 @Listeners({TestNGListenerImpl.class})
 
