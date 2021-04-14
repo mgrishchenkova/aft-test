@@ -7,7 +7,7 @@ import redmine.Manager.Context;
 public class Hooks {
     @After
     public void afterAll(Scenario scenario) {
-        Context.saveStashToAllure();
+        //Context.saveStashToAllure();
         Context.clearStash();
     }
 
