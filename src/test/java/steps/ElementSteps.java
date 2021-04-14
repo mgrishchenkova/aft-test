@@ -19,8 +19,8 @@ public class ElementSteps {
         element.sendKeys(text);
     }
 
-    @И("Заполнить поля: \"Пользователь\", \"Имя\", \"Фамилия\", \"randomEmail\"  для создания нового пользователя {string}")
-    public void createNewUser(String stashId) {
+    @И("Заполнить поля: \"Пользователь\", \"Имя\", \"Фамилия\", \"randomEmail\"  для создания нового пользователя")
+    public void createNewUser() {
         WebElement user = CucumberPageObjectHelper.getElementBy("Пользователи", "Пользователь");
         String userName=StringGenerator.randomString(11, StringGenerator.ENGLISH);
         user.sendKeys(userName);
@@ -30,7 +30,7 @@ public class ElementSteps {
         lastName.sendKeys(StringGenerator.randomString(16, StringGenerator.ENGLISH));
         WebElement randomEmail = CucumberPageObjectHelper.getElementBy("Пользователи", "randomEmail");
         randomEmail.sendKeys(StringGenerator.randomEmail());
-        Context.getStash().put(stashId,userName);
+        Context.getStash().put("user",userName);
 
 
     }

@@ -10,8 +10,11 @@ import redmine.Manager.Manager;
 import redmine.cucumber.ParametersValidator;
 import redmine.model.project.Project;
 import redmine.model.user.User;
-import redmine.ui.page.*;
 import redmine.ui.help.CucumberPageObjectHelper;
+import redmine.ui.page.AdministrationPage;
+import redmine.ui.page.HeaderPage;
+import redmine.ui.page.ProjectsPage;
+import redmine.ui.page.UserPage;
 import redmine.util.BrowseUtils;
 
 import java.util.List;
@@ -88,12 +91,14 @@ public class AssertionSteps {
         );
     }
 
-    @И("На странице \"Пользователи\" отображается элемент Пользователь <логин {string}-а> создан.")
-    public void assertFieldUserLogin(String stashId) {
-        User user =Context.getStash().get(stashId, User.class);
-        String element = String.format("Пользователь %s создан.", user.getLogin());
-        String elementForm = UserPage.createUserText();
-        Assert.assertEquals(element, elementForm);
+    @И("На странице Пользователи>>Новый Пользователь отображается уведомление {string}")
+    public void assertFieldUserLogin(String cucu) {
+        String user = Context.getStash().get("user", String.class);
+        String actual = String.format("Пользователь %s создан.", user);
+        String expected = UserPage.createUserText();
+        Assert.assertEquals(actual,expected);
+
+
     }
 
     @И("На главной странице пользователя {string} элемент Вошли как имеет текст {string}")
@@ -200,7 +205,7 @@ public class AssertionSteps {
 
     @То("В базе данных появилась в таблице User появилась запись с данными пользователями {string}")
     public void addBD(String stashId) {
-        String user = (String) Context.getStash().get(stashId);
+        String user = (String) Context.getStash().get("user");
         String query = String.format("select * from users inner join email_addresses  on users.id=email_addresses.user_id where login='%s'", user);
         List<Map<String, Object>> result = Manager.dbConnection.executeQuery(query);
         Map<String, Object> dbUser = result.get(0);
