@@ -4,6 +4,7 @@ import cucumber.api.CucumberOptions;
 import cucumber.api.testng.AbstractTestNGCucumberTests;
 import cucumber.api.testng.CucumberFeatureWrapper;
 import cucumber.api.testng.PickleEventWrapper;
+import io.qameta.allure.Attachment;
 import org.testng.ITest;
 import org.testng.annotations.*;
 
@@ -60,5 +61,11 @@ public class TestRunner extends AbstractTestNGCucumberTests implements ITest {
     @Override
     public String getTestName() {
         return null;
+    }
+
+
+    @Attachment(value = "Page screenshot", type = "image/png")
+    private byte[] saveScreenshot(byte[] screenshot) {
+        return screenshot;
     }
 }
