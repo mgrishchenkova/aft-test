@@ -66,6 +66,7 @@ public class Manager {
     /**
      * Открыть страницу Redmine
      */
+    @Step("Открыть страницу {0}")
     public static void openPage(String uri) {
         driver().get(Property.getStringProperties("ui.url") + uri);
     }
