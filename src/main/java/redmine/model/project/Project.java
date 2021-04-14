@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class Project implements Generatable<Project> {
 
     private Integer id;
-    private String name = "Mary" + StringGenerator.randomString(6, StringGenerator.ENGLISH);
+    private String name = "ololo" + StringGenerator.randomString(6, StringGenerator.ENGLISH);
     private String description = "description11";
     private String homepage;
     private Boolean isPublic = false;
