@@ -1,5 +1,6 @@
 package redmine.db;
 
+import io.qameta.allure.Allure;
 import redmine.Manager.Manager;
 import redmine.model.user.User;
 
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 public class UserRequests {
 
     public static List<User> getAllUser() {
+        Allure.step("Получение всех пользователей");
         String query = "select *from users;";
         List<Map<String, Object>> result = Manager.dbConnection.executeQuery(query);
         return result.stream()
@@ -53,6 +55,7 @@ public class UserRequests {
     }
 
     public static User updateUser(User user) {
+        Allure.step("изменение пользователя");
         String query = "update public.users\n" +
                 "set hashed_password=?, firstname=?, lastname=?, \"admin\"=?, status=?, last_login_on=?, \"language\"=?, auth_source_id=?, created_on=?, updated_on=?, \"type\"=?, identity_url=?, mail_notification=?, salt=?, must_change_passwd=?, passwd_changed_on=?\n" +
                 "where login=? RETURNING id;\n";
@@ -83,6 +86,7 @@ public class UserRequests {
     }
 
     public static User addUser(User user) {
+        Allure.step("Создание пользователя");
         String query = "insert into public.users\n" +
                 "(id, login, hashed_password, firstname, lastname, \"admin\", status, last_login_on, \"language\", auth_source_id, created_on, updated_on, \"type\", identity_url, mail_notification, salt, must_change_passwd, passwd_changed_on)\n" +
                 "values(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning id;\n";
