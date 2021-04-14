@@ -7,7 +7,7 @@ import io.qameta.allure.Step;
  * Context, где будут содержаться сущности, сохраненные в ходе выполнения тестоы
  */
 public class Context {
-    private static ThreadLocal<Stash> stash= new ThreadLocal<>();
+    private static ThreadLocal<Stash> stash = new ThreadLocal<>();
 
     public static void put(String stashId, Object entity) {
         getStash().put(stashId, entity);
@@ -38,7 +38,7 @@ public class Context {
     @Step("Сущности сохраненные в Context в ходе выполнения тестов")
     public static void saveStashToAllure() {
         getStash().getEntities().forEach(
-                (key, value) -> Allure.addAttachment(key, value!=null ? value.toString():"")
+                (key, value) -> Allure.addAttachment(key, value != null ? value.toString() : "")
         );
     }
 }

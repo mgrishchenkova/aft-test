@@ -6,8 +6,6 @@ import cucumber.api.testng.CucumberFeatureWrapper;
 import cucumber.api.testng.PickleEventWrapper;
 import org.testng.ITest;
 import org.testng.annotations.*;
-import redmine.Manager.Context;
-import redmine.Manager.Manager;
 
 import java.lang.reflect.Method;
 

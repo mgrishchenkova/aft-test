@@ -2,6 +2,7 @@ package steps;
 
 import cucumber.api.java.bg.И;
 import cucumber.api.java.ru.То;
+import lombok.SneakyThrows;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -16,7 +17,9 @@ import redmine.ui.page.HeaderPage;
 import redmine.ui.page.ProjectsPage;
 import redmine.ui.page.UserPage;
 import redmine.util.BrowseUtils;
+import redmine.util.StringGenerator;
 
+import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -45,6 +48,7 @@ public class AssertionSteps {
 
     }
 
+    @SneakyThrows
     @И("Будет открыта страница {string}")
     public void openPageProject(String pageName) {
         switch (pageName) {
@@ -61,6 +65,11 @@ public class AssertionSteps {
                 Assert.assertTrue(BrowseUtils.isElementCurrentlyPresent(getPage(UserPage.class).newUser));
                 break;
         }
+        byte[] screenshot = Manager.takeScreenshot();
+        FileOutputStream stream = new FileOutputStream("target\\" + StringGenerator.randomString(5,StringGenerator.ENGLISH_LOWER) + ".png");
+        stream.write(screenshot);
+        stream.flush();
+        stream.close();
     }
 
 
