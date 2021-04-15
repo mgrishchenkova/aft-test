@@ -16,13 +16,10 @@ public class LoginSteps {
     }
 
     @И("Авторизоваться пользователем {string}")
-    public void createAdmin(String UsertashId) {
-        User user = Context.getStash().get(UsertashId, User.class);
+    public void createAdmin(String userStashId) {
+        User user = Context.getStash().get(userStashId, User.class);
         getPage(LoginPage.class).login(user.getLogin(), user.getPassword());
-
     }
-
-
 
 
 }

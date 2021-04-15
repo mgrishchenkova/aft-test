@@ -8,10 +8,8 @@ public interface Generatable<T> {
     T create();
 
     default T generate() {
-        if (read() != null) {
-            return update();
-        } else return create();
-
+        return read() != null
+                ? update()
+                : create();
     }
-
 }

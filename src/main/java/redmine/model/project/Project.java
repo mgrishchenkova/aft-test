@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import redmine.db.ProjectRequest;
+import redmine.db.ProjectRequests;
 import redmine.model.Generatable;
 import redmine.util.StringGenerator;
 
@@ -35,17 +35,17 @@ public class Project implements Generatable<Project> {
 
     @Override
     public Project read() {
-        Project project = ProjectRequest.getProject(this);
+        Project project = ProjectRequests.getProject(this);
         return project;
     }
 
     @Override
     public Project update() {
-        return ProjectRequest.updateProject(this);
+        return ProjectRequests.updateProject(this);
     }
 
     @Override
     public Project create() {
-        return ProjectRequest.createProject(this);
+        return ProjectRequests.createProject(this);
     }
 }

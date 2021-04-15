@@ -3,6 +3,7 @@ package redmine.model.role;
 import lombok.AllArgsConstructor;
 
 import java.util.stream.Stream;
+
 @AllArgsConstructor
 public enum RolePermission {
     ADD_PROJECT("Создание проекта"),
@@ -74,7 +75,7 @@ public enum RolePermission {
     PROTECT_WIKI_Page("Блокирование wiki-страниц"),
     MANAGE_WIKI("Управление Wiki");
 
-    public  final String description;
+    public final String description;
 
 
     public static RolePermission of(String description) {

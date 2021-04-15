@@ -1,7 +1,6 @@
 package redmine.api.implementations;
 
 import io.qameta.allure.Allure;
-import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
 import io.restassured.http.Method;
 import io.restassured.specification.RequestSpecification;
@@ -24,9 +23,9 @@ public class RestApiClient implements ApiClient {
         token = user.getApiKey();
     }
 
-    @Step("Выполнение Rest-запроса")
     @Override
     public Response request(Request request) {
+        Allure.step("Выполнение запроса");
         RequestSpecification specification = given();
         Map<String, String> headers = request.getHeaders();
         headers.put("X-Redmine-API-Key", token);
@@ -52,7 +51,6 @@ public class RestApiClient implements ApiClient {
         Allure.addAttachment("Запрос", request.toString());
         Allure.addAttachment("Ответ", response.toString());
     }
-
 
 
 }

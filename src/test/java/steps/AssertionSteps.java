@@ -99,7 +99,7 @@ public class AssertionSteps {
         String user = Context.getStash().get("user", String.class);
         String actual = String.format("Пользователь %s создан.", user);
         String expected = UserPage.createUserText();
-        Assert.assertEquals(actual,expected);
+        Assert.assertEquals(actual, expected);
 
 
     }

@@ -17,6 +17,7 @@ public class Hooks {
         Context.clearStash();
         Manager.driverQuit();
     }
+
     @After
     public void addScreenshotOnFailed(Scenario scenario) throws IOException {
         if (scenario.isFailed()) {
@@ -24,7 +25,8 @@ public class Hooks {
                 byte[] screenshot = Manager.takeScreenshot();
 
                 Allure.addAttachment("Failed step", new FileInputStream(String.valueOf(screenshot)));
-            } catch (FileNotFoundException ignored) {}
+            } catch (FileNotFoundException ignored) {
+            }
         }
     }
 

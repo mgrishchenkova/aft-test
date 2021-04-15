@@ -18,7 +18,6 @@ public class Page {
 
     @SneakyThrows
     public static <T extends redmine.ui.page.AbstractPage> T getPage(Class<T> clazz) {
-        //
         T page = clazz.newInstance();
         PageFactory.initElements(Manager.driver(), page);
         Allure.addAttachment("screenshot", new ByteArrayInputStream(Manager.takeScreenshot()));

@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 
 import static redmine.util.GsonHelper.getGson;
 
-public class ApiStep {
+public class ApiSteps {
     @И("У пользователя {string} есть доступ к API и ключ API")
     public void generateApiKey(String stashIdUser) {
         User user = Context.getStash().get(stashIdUser, User.class);
@@ -317,6 +317,6 @@ public class ApiStep {
         UserDTO userDTO = Context.getStash().get("userDTO", UserDTO.class);
         String query = String.format("select *from users where login='%s'", userDTO.getUser().getLogin());
         List<Map<String, Object>> result = Manager.dbConnection.executeQuery(query);
-        Assert.assertEquals(result.size(),0);
+        Assert.assertEquals(result.size(), 0);
     }
 }

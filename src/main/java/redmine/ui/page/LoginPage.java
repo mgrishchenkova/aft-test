@@ -21,7 +21,7 @@ public class LoginPage extends AbstractPage {
     private WebElement submit;
 
     @CucumberName("Ваша учётная запись создана и ожидает подтверждения администратора.")
-    @FindBy(xpath = " //div[@class=\"flash error\"]") //Выйти
+    @FindBy(xpath = " //div[@class=\"flash error\"]")
     public WebElement errors;
 
     public void login(String login, String password) {

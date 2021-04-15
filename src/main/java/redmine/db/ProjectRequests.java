@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ProjectRequest {
+public class ProjectRequests {
     public static List<Project> getAllProject() {
         String query = "select *from public.projects";
         List<Map<String, Object>> result = Manager.dbConnection.executeQuery(query);

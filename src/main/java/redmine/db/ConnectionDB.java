@@ -20,6 +20,7 @@ public class ConnectionDB {
     public Connection getConnection() {
         return connection;
     }
+
     public ConnectionDB() {
         initVariables();
         connect();
@@ -34,11 +35,15 @@ public class ConnectionDB {
         dbName = Property.getStringProperties("dbName");
     }
 
-    @SneakyThrows
+
     private void connect() {
-        Class.forName("org.postgresql.Driver");
-        String url = String.format("jdbc:postgresql://%s:%d/%s?user=%s&password=%s", dbHost, dbPort, dbName, dbUser, dbPass);
-        connection = DriverManager.getConnection(url);
+        try {
+            Class.forName("org.postgresql.Driver");
+            String url = String.format("jdbc:postgresql://%s:%d/%s?user=%s&password=%s", dbHost, dbPort, dbName, dbUser, dbPass);
+            connection = DriverManager.getConnection(url);
+        } catch (SQLException | ClassNotFoundException exception) {
+            throw new RuntimeException(exception);
+        }
     }
 
     /**

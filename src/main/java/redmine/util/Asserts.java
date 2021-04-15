@@ -19,12 +19,12 @@ public class Asserts {
         Assert.assertNotEquals(actual, expected);
     }
 
-    @Step("Сравнение Boolean переменной {0}")
+    @Step("Сравнение Boolean переменной: на true {1}")
     public static void assertTrue(Boolean actual, String message) {
         Assert.assertTrue(actual, message);
     }
 
-    @Step("Сравнение Boolean переменной {0} ")
+    @Step("Сравнение Boolean переменной:на false {1} ")
     public static void assertFalse(Boolean actual, String message) {
         Assert.assertFalse(actual, message);
     }

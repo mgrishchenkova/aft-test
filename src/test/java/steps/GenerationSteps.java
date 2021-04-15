@@ -4,7 +4,7 @@ import cucumber.api.java.ru.И;
 import cucumber.api.java.ru.Пусть;
 import redmine.Manager.Context;
 import redmine.cucumber.ParametersValidator;
-import redmine.db.ProjectRequest;
+import redmine.db.ProjectRequests;
 import redmine.model.project.Project;
 import redmine.model.role.*;
 import redmine.model.user.User;
@@ -90,7 +90,7 @@ public class GenerationSteps {
         User user = Context.getStash().get(stashIdUser, User.class);
         Project project = Context.getStash().get(stashIdProject, Project.class);
         Role role = Context.getStash().get(stashIdRole, Role.class);
-        ProjectRequest.addUserAndRoleToProject(project, user, role);
+        ProjectRequests.addUserAndRoleToProject(project, user, role);
     }
 
     @И("Я сохраняю список прав в переменную {string}:")
